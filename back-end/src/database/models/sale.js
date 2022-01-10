@@ -17,6 +17,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Sale.init({
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: User,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
+    seller_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: User,
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
+    },
     total_price: DataTypes.DECIMAL(9, 2),
     delivery_address: DataTypes.STRING(100),
     delivery_number: DataTypes.STRING(50),
@@ -26,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Sale',
   });
-  Sale.belongsTo(User);
-  // Sale.belongsTo(User, { foreignKey: 'seller_id' });
+  // Sale.belongsTo(User);
+  // // Sale.belongsTo(User, { foreignKey: 'seller_id' });
   return Sale;
 };
