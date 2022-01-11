@@ -1,15 +1,19 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
+import { Formik, Form as FormikForm } from 'formik';
 
-import { Formik, Field as FormikField, Form as FormikForm } from 'formik';
+export default function Form({ children, ...options }) {
+  console.log(options);
 
-export function Form({ children, ...options }) {
   return (
-    <Formik {...options}>
+    <Formik { ...options }>
       <FormikForm>
         { children }
       </FormikForm>
     </Formik>
-  )
-};
+  );
+}
 
-export { FormikField as Field };
+Form.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+};
