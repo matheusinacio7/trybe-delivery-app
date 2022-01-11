@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Form, Field, Button } from '../shared';
+import { Button, Form, Field, Heading } from '../shared';
 
 export default function Login() {
   return (
     <main>
-      <h1>Delivery App!</h1>
-      <h2>Entrar</h2>
+      <Heading level={ 1 }>Delivery App!</Heading>
+      <Heading level={ 2 }>Entrar</Heading>
       <Form
         initialValues={ { email: '', password: '' } }
         onSubmit={ (values) => console.log(values) }
