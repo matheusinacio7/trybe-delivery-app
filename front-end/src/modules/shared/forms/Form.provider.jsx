@@ -25,6 +25,9 @@ export default function FormProvider({ schema, children, ...options }) {
 }
 
 FormProvider.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.element),
+    PropTypes.element, PropTypes.func,
+  ]).isRequired,
   schema: PropTypes.string.isRequired,
 };

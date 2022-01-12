@@ -12,10 +12,10 @@ export default function Login() {
         onSubmit={ (values) => console.log(values) }
         schema="login"
         validateOnChange
+        initialErrors={ { email: 'Invalid email' } }
       >
-        {({ errors, isValidating }) => (
+        {({ isValid }) => (
           <Form>
-            { console.log({ errors, isValidating }) }
             <Field name="email" type="email" data-testid="common_login__input-email" />
             <Field
               name="password"
@@ -23,7 +23,7 @@ export default function Login() {
               data-testid="common_login__input-password"
             />
             <Button
-              disabled={ isValidating || Object.keys(errors).length > 0 }
+              disabled={ !isValid }
               type="submit"
               testId="common_login__button-login"
             >
