@@ -2,7 +2,7 @@
   "name": "delivery-app-back-end",
   "version": "0.1.0",
   "description": "Back-end do projeto App de Delivery",
-  "main": "./src/api/server.js",
+  "main": "./src/modules/app/app.js",
   "engines": {
     "node": ">=14.0.0"
   },
@@ -12,7 +12,7 @@
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "start": "node .",
     "dev": "nodemon .",
-    "test": "mocha src/tests/**/*$NAME*.test.js --exit",
+    "test": "jest",
     "test:coverage": "nyc --all npm run test",
     "test:coverage:json": "nyc --all --reporter=json-summary npm run test",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
@@ -36,10 +36,12 @@
     "chai": "4.3.4",
     "chai-http": "4.3.0",
     "eslint-config-trybe-backend": "1.0.3",
+    "jest": "^27.4.7",
     "mocha": "8.4.0",
     "nodemon": "2.0.4",
     "nyc": "15.1.0",
     "sequelize-cli": "6.2.0",
-    "sinon": "10.0.0"
+    "sinon": "10.0.0",
+    "supertest": "^6.2.1"
   }
 }
