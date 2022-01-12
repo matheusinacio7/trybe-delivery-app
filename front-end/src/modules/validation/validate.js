@@ -9,7 +9,11 @@ export default function validate(schema, data) {
 
   return schemas[schema].validate(data, { abortEarly: false })
     .catch((err) => {
-      throw new ValidationError(err.errors);
+      const errors = err.inner.reduce((acc, error) => {
+        acc[error.path] = error.message;
+        return acc;
+      }, {});
+      throw new ValidationError(errors);
     });
 
   // import (`./schemas/${schema}.schema`) o codigo que poderia ter sido :/ babel lint desatualizado
