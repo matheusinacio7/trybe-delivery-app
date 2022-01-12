@@ -46,7 +46,7 @@ describe(requirement(2), () => {
   });
 });
 
-describe(requirement(3), () => {
+describe.only(requirement(3), () => {
   const logins = [
     {
       email: "cliente@email",
