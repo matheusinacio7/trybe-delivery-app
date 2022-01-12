@@ -1,16 +1,12 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import { Formik, Form as FormikForm } from 'formik';
+import { Form as FormikForm } from 'formik';
 
-export default function Form({ children, ...options }) {
-  console.log(options);
-
+export default function Form({ children }) {
   return (
-    <Formik { ...options }>
-      <FormikForm>
-        { children }
-      </FormikForm>
-    </Formik>
+    <FormikForm>
+      { children }
+    </FormikForm>
   );
 }
 

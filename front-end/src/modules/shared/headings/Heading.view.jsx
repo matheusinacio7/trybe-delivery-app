@@ -11,10 +11,11 @@ export default function Heading({ children, level, testId, size }) {
 Heading.propTypes = {
   children: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
-  testId: PropTypes.string.isRequired,
+  testId: PropTypes.string,
   size: PropTypes.oneOf(['s', 'm', 'l']),
 };
 
 Heading.defaultProps = {
   size: 'm',
+  testId: null,
 };
