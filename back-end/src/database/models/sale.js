@@ -31,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING(50),
   }, {
     sequelize,
-    modelName: 'Sale',
+    modelName: 'sale',
+    timestamps: false,
   });
   return Sale;
 };

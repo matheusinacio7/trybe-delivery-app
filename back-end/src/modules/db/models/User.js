@@ -1,5 +1,5 @@
 const Model = require('../Model');
-const { User: UserModel } = require('../../../database/models');
+const { user: UserModel } = require('../../../database/models');
 
 class User extends Model {
   static Model = UserModel;

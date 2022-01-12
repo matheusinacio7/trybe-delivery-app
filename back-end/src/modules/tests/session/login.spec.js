@@ -47,6 +47,6 @@ describe('POST /session', () => {
     })
     .expect(404)
     .then((res) => {
-      expect(res.body.message).toBe('User not found');
+      expect(res.body.error.message).toBe('User not found');
     }));
 });
