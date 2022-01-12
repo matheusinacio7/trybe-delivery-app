@@ -10,6 +10,8 @@ export default function Login() {
       <Form
         initialValues={ { email: '', password: '' } }
         onSubmit={ (values) => console.log(values) }
+        schema="login"
+        validateOnChange
       >
         <Field name="email" type="email" data-testid="common_login__input-email" />
         <Field
