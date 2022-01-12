@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const sessionRouter = require('../session').router;
+const sessionRouter = require('./session').router;
 
 router.use('/session', sessionRouter);
 

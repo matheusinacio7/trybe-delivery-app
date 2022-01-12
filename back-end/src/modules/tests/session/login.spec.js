@@ -21,7 +21,7 @@ describe('POST /session', () => {
 
   describe('should return a validation error with invalid', () => {
     it('email', () => request(server)
-      .post('/session')
+      .post('/user/session')
       .send(userWithInvalidEmail)
       .expect(400)
       .then((response) => {
@@ -30,7 +30,7 @@ describe('POST /session', () => {
       }));
     
     it('password', () => request(server)
-      .post('/session')
+      .post('/user/session')
       .send(userWithInvalidPassword)
       .expect(400)
       .then((response) => {
@@ -39,8 +39,8 @@ describe('POST /session', () => {
       }));
   });
 
-  it("should return a not found error when the user doesn't exist", () => request(server)
-    .post('/session')
+  it.only("should return a not found error when the user doesn't exist", () => request(server)
+    .post('/user/session')
     .send({
       email: 'non-existing@user.com',
       password: '123456',

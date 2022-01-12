@@ -1,10 +1,12 @@
-const { Model } = require('../');
+const Model = require('../user.model');
 
 const { NotFoundError } = require('../../shared/errors');
 
-const create = (userData) => {
+const create = async (userData) => {
   // validate
-  const user = Model.find({ email: userData.email });
+  const user = await Model.findOne({ email: userData.email });
+
+  console.log(user);
 
   if (!user) {
     throw new NotFoundError('User not found');
