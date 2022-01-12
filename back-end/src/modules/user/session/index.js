@@ -1,9 +1,9 @@
-const Controller = require('./session.controller');
-const Model = require('./session.model');
-const Router = require('./session.router');
+const controller = require('./session.controller');
+const model = require('./session.model');
+const router = require('./session.router');
 
 module.exports = {
-  Controller,
-  Model,
-  Router,
+  controller,
+  model,
+  router,
 };
