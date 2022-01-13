@@ -5,7 +5,11 @@ function hash(value) {
 }
 
 function compare({ value, hash: hashedValue }) {
-  return hash(value) === hashedValue;
+  if (hash(value) !== hashedValue) {
+    throw new Error('Hashing failed');
+  }
+
+  return true;
 }
 
 module.exports = {
