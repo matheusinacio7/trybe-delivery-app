@@ -4,8 +4,10 @@ const addErrors = require('ajv-errors');
 
 const { ValidationError } = require('../shared/errors');
 
+const loginSchema = require('./schemas/user/session/login.schema.json');
+
 const userSchemas = {
-  login: [require('./schemas/user/session/login.schema.json'), 'user_session_login'],
+  login: [loginSchema, 'user_session_login'],
 };
 
 const ajv = new Ajv({ allErrors: true });
