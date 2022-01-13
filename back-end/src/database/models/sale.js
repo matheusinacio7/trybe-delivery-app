@@ -1,5 +1,6 @@
 'use strict';
-import User from './user';
+
+const User = require('./user');
 
 const {
   Model
@@ -30,7 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING(50),
   }, {
     sequelize,
-    modelName: 'Sale',
+    modelName: 'sale',
+    timestamps: false,
   });
   return Sale;
 };
