@@ -52,6 +52,17 @@ describe('POST /session', () => {
       expect(res.body.error.message).toBe('User not found');
     }));
 
+  it('returns an error with a wrong password', () => request(server)
+    .post(url)
+    .send({
+      email: validUser.email,
+      password: 'wrong-password',
+    })
+    .expect(401)
+    .then((res) => {
+      expect(res.body.error.message).toBe('Invalid credentials');
+    }));
+
   it('returns a token when the user exists', () => request(server)
     .post(url)
     .send(validUser)
