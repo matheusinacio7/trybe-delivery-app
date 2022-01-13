@@ -105,7 +105,7 @@ describe(requirement(3), () => {
   });
 });
 
-describe(requirement(4), () => {
+describe.only(requirement(4), () => {
   const login = {
     email: internet.email().toLowerCase(),
     password: internet.password(passwordMinLen),
