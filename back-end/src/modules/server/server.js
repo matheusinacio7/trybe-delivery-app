@@ -10,7 +10,7 @@ const app = express();
 app.use(
   express.json(),
   cors(),
-  helmet()
+  helmet(),
 );
 
 app.use(router);

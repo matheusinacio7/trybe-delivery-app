@@ -3,4 +3,4 @@ module.exports = class NotFoundError extends Error {
     super(message);
     this.code = 'NOT_FOUND';
   }
-}
+};

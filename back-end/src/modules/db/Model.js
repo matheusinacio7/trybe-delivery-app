@@ -1,6 +1,6 @@
 class Model {
   static findOne(query) {
-    return this.Model.findOne({ where: query })
+    return this.Model.findOne({ where: query });
   }
 }
 

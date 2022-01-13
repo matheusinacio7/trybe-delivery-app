@@ -4,6 +4,8 @@ const request = require('supertest');
 const server = require('../../server');
 
 describe('POST /session', () => {
+  const url = '/user/session';
+
   const userWithInvalidEmail = {
     email: 'invalid@email',
     password: '123456',
@@ -14,14 +16,14 @@ describe('POST /session', () => {
     password: '12345',
   };
 
-  const validUser = {
-    email: 'valid@user.com',
-    password: '123456',
-  };
+  // const validUser = {
+  //   email: 'valid@user.com',
+  //   password: '123456',
+  // };
 
   describe('should return a validation error with invalid', () => {
     it('email', () => request(server)
-      .post('/user/session')
+      .post(url)
       .send(userWithInvalidEmail)
       .expect(400)
       .then((response) => {
@@ -30,7 +32,7 @@ describe('POST /session', () => {
       }));
     
     it('password', () => request(server)
-      .post('/user/session')
+      .post(url)
       .send(userWithInvalidPassword)
       .expect(400)
       .then((response) => {
@@ -39,8 +41,8 @@ describe('POST /session', () => {
       }));
   });
 
-  it("should return a not found error when the user doesn't exist", () => request(server)
-    .post('/user/session')
+  it('should return a not found error when the user doesn\'t exist', () => request(server)
+    .post(url)
     .send({
       email: 'non-existing@user.com',
       password: '123456',
