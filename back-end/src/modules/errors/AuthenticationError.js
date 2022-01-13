@@ -4,4 +4,4 @@ module.exports = class AuthenticationError extends Error {
     this.code = 'AUTHENTICATION_ERROR';
     this.message = message;
   }
-}
+};

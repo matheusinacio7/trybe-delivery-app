@@ -19,7 +19,7 @@ const create = async (userData) => {
     throw new AuthenticationError('Invalid credentials');
   }
 
-  const token = sign({ id: user._id, role: user.role });
+  const token = sign({ id: user.id, role: user.role });
 
   return { token };
 };

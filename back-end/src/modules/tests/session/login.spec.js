@@ -69,6 +69,5 @@ describe('POST /session', () => {
     .expect(200)
     .then((res) => {
       expect(res.body.token).toBeDefined();
-    }
-  ));
+    }));
 });
