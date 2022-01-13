@@ -1,3 +1,3 @@
-import login from './login';
-
-export default { login };
+const iDislikeThisRule = null;
+export { default as login } from './login';
+export { iDislikeThisRule };
