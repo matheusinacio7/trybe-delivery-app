@@ -39,7 +39,7 @@
   "devDependencies": {
     "chai": "4.3.4",
     "chai-http": "4.3.0",
-    "eslint-config-trybe-backend": "1.0.3",
+    "eslint-config-trybe-backend": "^1.0.4",
     "jest": "^27.4.7",
     "mocha": "8.4.0",
     "nodemon": "2.0.4",
