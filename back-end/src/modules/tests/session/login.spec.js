@@ -17,8 +17,8 @@ describe('POST /session', () => {
   };
 
   const validUser = {
-    email: 'valid@user.com',
-    password: '123456',
+    email: 'adm@deliveryapp.com',
+    password: '--adm2@21!!--',
   };
 
   describe('returns a validation error with invalid', () => {

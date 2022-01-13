@@ -19,7 +19,9 @@ const create = async (userData) => {
     throw new AuthenticationError('Invalid credentials');
   }
 
-  return sign({ id: user._id, role: user.role });
+  const token = sign({ id: user._id, role: user.role });
+
+  return { token };
 };
 
 module.exports = {

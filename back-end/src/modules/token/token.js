@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 const key = fs.readFileSync('jwt.evaluation.key');
 
 const sign = (payload) => {
-  return jwt.sign(payload, key, { algorithm: 'RS256' });
+  return jwt.sign(payload, key);
 }
 
 const decrypt = (token) => {
-  return jwt.verify(token, key, { algorithm: 'RS256' });
+  return jwt.verify(token, key);
 }
 
 module.exports = {
