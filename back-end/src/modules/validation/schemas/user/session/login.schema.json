@@ -3,11 +3,13 @@
   "properties": {
     "email": {
       "type": "string",
-      "format": "email"
+      "format": "email",
+      "errorMessage": "Invalid email"
     },
     "password": {
       "type": "string",
-      "minLength": 6
+      "minLength": 6,
+      "errorMessage": "Invalid password"
     }
   },
   "required": ["email", "password"],

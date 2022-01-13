@@ -39,7 +39,7 @@ describe('POST /session', () => {
       }));
   });
 
-  it.only("should return a not found error when the user doesn't exist", () => request(server)
+  it("should return a not found error when the user doesn't exist", () => request(server)
     .post('/user/session')
     .send({
       email: 'non-existing@user.com',

@@ -1,5 +1,6 @@
 const Ajv = require('ajv');
 const addFormats = require('ajv-formats');
+const addErrors = require('ajv-errors');
 
 const { ValidationError } = require('../shared/errors');
 
@@ -7,8 +8,9 @@ const userSchemas = {
   login: [require('./schemas/user/session/login.schema.json'), 'user_session_login'],
 };
 
-const ajv = new Ajv();
+const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
+addErrors(ajv);
 
 ajv.addSchema(...userSchemas.login);
 
@@ -17,8 +19,18 @@ const validate = async ({ schema, data }) => {
   const isValid = validateSchema(data);
 
   if (!isValid) {
+    const errors = validateSchema.errors.map(({
+      instancePath,
+      message,
+      keyword,
+    }) => ({
+      path: `${schema}/${instancePath}`,
+      message,
+      keyword,
+    }));
+
     throw new ValidationError({
-      errors: validateSchema.errors,
+      errors,
     });
   }
 
