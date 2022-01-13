@@ -66,7 +66,7 @@ describe('POST /session', () => {
   it('returns a token when the user exists', () => request(server)
     .post(url)
     .send(validUser)
-    .expect(201)
+    .expect(200)
     .then((res) => {
       expect(res.body.token).toBeDefined();
     }
