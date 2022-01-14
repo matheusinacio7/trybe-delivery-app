@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { register } from '../api/user';
-import { Button, Form, FormProvider, Field, Heading } from '../shared';
+import { Button } from '../buttons';
+import { Field, Form, FormProvider } from '../forms';
+import { Heading } from '../text';
 
 export default function Register() {
   const [error, setError] = useState(null);
