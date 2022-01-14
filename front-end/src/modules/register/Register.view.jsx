@@ -8,6 +8,9 @@ export default function Register() {
       <Heading level={ 1 }>Cadastro</Heading>
       <FormProvider
         initialValues={ { name: '', email: '', password: '' } }
+        initialErrors={ { email: 'Invalid email' } }
+        schema="register"
+        validateOnChange
       >
         {({ isValid }) => (
           <Form>
