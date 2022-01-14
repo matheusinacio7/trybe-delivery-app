@@ -49,7 +49,7 @@ export default function Register() {
               </Button>
             </Form>
             { error && (
-              <p data-testid="common_register__element-invalid-register">
+              <p data-testid="common_register__element-invalid_register">
                 { error.message }
               </p>
             ) }
