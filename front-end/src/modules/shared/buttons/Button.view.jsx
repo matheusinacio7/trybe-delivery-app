@@ -1,7 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export default function Button({ disabled, children, testId, type }) {
+export default function Button({ disabled, children, testId, type, navigateTo }) {
+  if (navigateTo) {
+    return (
+      <button
+        disabled={ disabled }
+        data-testid={ testId }
+        type="button"
+      >
+        <Link to={ navigateTo }>{ children }</Link>
+      </button>
+    );
+  }
+
   //! Isso ta aqui por causa da regra de button type ter de ser estatico (???????)
   if (type === 'button') {
     return (
@@ -31,9 +44,11 @@ Button.propTypes = {
   testId: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['button', 'submit']),
   disabled: PropTypes.bool,
+  navigateTo: PropTypes.string,
 };
 
 Button.defaultProps = {
   type: 'button',
   disabled: false,
+  navigateTo: null,
 };
