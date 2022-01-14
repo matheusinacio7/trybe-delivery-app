@@ -3,6 +3,8 @@ const request = require('supertest');
 
 const server = require('../../server');
 
+const { resetDb } = require('../helpers');
+
 describe('POST /user', () => {
   const url = '/user';
 
@@ -24,10 +26,11 @@ describe('POST /user', () => {
     password: '123456',
   };
 
-  // const validUser = {
-  //   email: 'adm@deliveryapp.com',
-  //   password: '--adm2@21!!--',
-  // };
+  const validUser = {
+    name: 'Jest McTest User',
+    email: 'valid@email.com',
+    password: '123456',
+  };
 
   describe('returns a validation error with invalid', () => {
     it('name', () => request(server)
@@ -58,11 +61,15 @@ describe('POST /user', () => {
       }));
   });
 
-  // it('returns a token when the user exists', () => request(server)
-  //   .post(url)
-  //   .send(validUser)
-  //   .expect(200)
-  //   .then((res) => {
-  //     expect(res.body.token).toBeDefined();
-  //   }));
+  it('returns a token when the user is registered successfully', async () => {
+    resetDb();
+    await request(server)
+      .post(url)
+      .send(validUser)
+      .expect(201)
+      .then((response) => {
+        expect(response.body.token).toBeDefined();
+      }
+    );
+  });
 });
