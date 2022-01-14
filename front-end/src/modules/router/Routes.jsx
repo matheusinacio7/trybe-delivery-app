@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate, Routes as ReactRouterRoutes, Route } from 'react-router-dom';
 
-import { Login } from '../login';
-import { Register } from '../register';
+import Login from '../login';
+import Register from '../register';
 
 export default function Routes() {
   return (
