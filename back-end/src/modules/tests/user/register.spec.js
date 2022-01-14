@@ -6,6 +6,10 @@ const server = require('../../server');
 const { resetDb } = require('../helpers');
 
 describe('POST /user', () => {
+  beforeEach(() => {
+    resetDb();
+  });
+
   const url = '/user';
 
   const userWithInvalidEmail = {
@@ -77,7 +81,6 @@ describe('POST /user', () => {
     }));
 
   it('returns a token when the user is registered successfully', async () => {
-    resetDb();
     await request(server)
       .post(url)
       .send(validUser)

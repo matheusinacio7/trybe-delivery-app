@@ -3,6 +3,7 @@ const Model = require('./user.model');
 const { hash } = require('../hashing');
 const SessionController = require('./session/session.controller');
 
+const { ConflictError } = require('../errors');
 const { validate } = require('../validation');
 
 const create = async (userData) => {
@@ -10,12 +11,20 @@ const create = async (userData) => {
 
   const { password, ...otherData } = userData;
   
-  const response = await Model.create({
-    password: hash(password),
-    role: 'customer',
-    ...otherData,
-  });
-  return response;
+  try {
+    const response = await Model.create({
+      password: hash(password),
+      role: 'customer',
+      ...otherData,
+    });
+    return response;
+  } catch (err) {
+    if (err.original.code === 'ER_DUP_ENTRY') {
+      throw new ConflictError('User already registered');
+    }
+
+    throw err;
+  }
 };
 
 const createAndLogin = async (userData) => {
