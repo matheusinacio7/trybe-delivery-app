@@ -6,6 +6,10 @@ const server = require('../../server');
 const { resetDb } = require('../helpers');
 
 describe('POST /user', () => {
+  beforeEach(() => {
+    resetDb();
+  });
+
   const url = '/user';
 
   const userWithInvalidEmail = {
@@ -29,6 +33,12 @@ describe('POST /user', () => {
   const validUser = {
     name: 'Jest McTest User',
     email: 'valid@email.com',
+    password: '123456',
+  };
+
+  const existingUser = {
+    name: 'Delivery App Admin hehehe',
+    email: 'adm@deliveryapp.com',
     password: '123456',
   };
 
@@ -61,8 +71,16 @@ describe('POST /user', () => {
       }));
   });
 
+  it('returns an error when the user email is already registered', () => request(server)
+    .post(url)
+    .send(existingUser)
+    .expect(409)
+    .then((response) => {
+      expect(response.body.error.message).toBe('User already registered');
+      expect(response.body.error.code).toBe('CONFLICT_ERROR');
+    }));
+
   it('returns a token when the user is registered successfully', async () => {
-    resetDb();
     await request(server)
       .post(url)
       .send(validUser)
