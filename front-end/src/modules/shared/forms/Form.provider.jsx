@@ -8,15 +8,19 @@ import { validate } from '../../validation';
 export default function FormProvider({ schema, children, ...options }) {
   return (
     <Formik
-      validate={ (data) => validate(schema, data)
-        .then(() => null)
-        .catch((err) => {
-          if (err instanceof ValidationError) {
-            return err.errors;
-          }
+      validate={ (data) => {
+        if (!schema) return Promise.resolve(true);
 
-          console.error(err);
-        }) }
+        return validate(schema, data)
+          .then(() => null)
+          .catch((err) => {
+            if (err instanceof ValidationError) {
+              return err.errors;
+            }
+
+            console.error(err);
+          });
+      } }
       { ...options }
     >
       { children }
@@ -29,5 +33,9 @@ FormProvider.propTypes = {
     PropTypes.arrayOf(PropTypes.element),
     PropTypes.element, PropTypes.func,
   ]).isRequired,
-  schema: PropTypes.string.isRequired,
+  schema: PropTypes.string,
+};
+
+FormProvider.defaultProps = {
+  schema: null,
 };
