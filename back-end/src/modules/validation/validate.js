@@ -5,16 +5,20 @@ const addErrors = require('ajv-errors');
 const { ValidationError } = require('../errors');
 
 const loginSchema = require('./schemas/user/session/login.schema.json');
-
-const userSchemas = {
-  login: [loginSchema, 'user_session_login'],
-};
+const registerSchema = require('./schemas/user/register.schema.json');
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
 addErrors(ajv);
 
-ajv.addSchema(...userSchemas.login);
+const schemas = [
+  [loginSchema, 'user_session_login'],
+  [registerSchema, 'user_register'],
+];
+
+for (let schema of schemas) {
+  ajv.addSchema(schema[0], schema[1]);
+}
 
 const validate = async ({ schema, data }) => {
   const validateSchema = ajv.getSchema(schema);
