@@ -32,6 +32,12 @@ describe('POST /user', () => {
     password: '123456',
   };
 
+  const existingUser = {
+    name: 'Delivery App Admin hehehe',
+    email: 'adm@deliveryapp.com',
+    password: '123456',
+  };
+
   describe('returns a validation error with invalid', () => {
     it('name', () => request(server)
       .post(url)
@@ -60,6 +66,15 @@ describe('POST /user', () => {
         expect(response.body.error.code).toBe('VALIDATION_ERROR');
       }));
   });
+
+  it('returns an error when the user email is already registered', () => request(server)
+    .post(url)
+    .send(existingUser)
+    .expect(409)
+    .then((response) => {
+      expect(response.body.error.message).toBe('User already registered');
+      expect(response.body.error.code).toBe('CONFLICT_ERROR');
+    }));
 
   it('returns a token when the user is registered successfully', async () => {
     resetDb();
