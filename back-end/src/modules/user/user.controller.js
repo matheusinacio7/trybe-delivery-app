@@ -35,9 +35,9 @@ const createAndLogin = async (userData) => {
   });
 
   return { token };
-}
+};
 
 module.exports = {
   create,
-  createAndLogin
+  createAndLogin,
 };

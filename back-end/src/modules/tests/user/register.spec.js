@@ -6,34 +6,34 @@ const server = require('../../server');
 const { resetDb } = require('../helpers');
 
 describe('POST /user', () => {
-  beforeEach(() => {
+  beforeEach(function () {
     resetDb();
   });
 
   const url = '/user';
 
   const userWithInvalidEmail = {
-    name: 'Jest McTest User',
+    name: 'Jest McTest User 1',
     email: 'invalid@email',
-    password: '123456',
+    password: '1234567',
   };
 
   const userWithInvalidPassword = {
-    name: 'Jest McTest User',
-    email: 'valid@email.com',
+    name: 'Jest McTest User 2',
+    email: 'valid1@email.com',
     password: '12345',
   };
 
   const userWithInvalidName = {
     name: 'Jest',
-    email: 'valid@email.com',
-    password: '123456',
+    email: 'valid2@email.com',
+    password: '1234568',
   };
 
   const validUser = {
-    name: 'Jest McTest User',
-    email: 'valid@email.com',
-    password: '123456',
+    name: 'Jest McTest User 3',
+    email: 'valid3@email.com',
+    password: '1234569',
   };
 
   const existingUser = {
@@ -87,7 +87,6 @@ describe('POST /user', () => {
       .expect(201)
       .then((response) => {
         expect(response.body.token).toBeDefined();
-      }
-    );
+      });
   });
 });

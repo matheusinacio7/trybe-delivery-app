@@ -16,9 +16,9 @@ const schemas = [
   [registerSchema, 'user_register'],
 ];
 
-for (let schema of schemas) {
-  ajv.addSchema(schema[0], schema[1]);
-}
+schemas.forEach(([schema, name]) => {
+  ajv.addSchema(schema, name);
+});
 
 const validate = async ({ schema, data }) => {
   const validateSchema = ajv.getSchema(schema);
