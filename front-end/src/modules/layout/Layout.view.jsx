@@ -1,13 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { CustomerNavbar } from './navbars';
+
+const NavBars = {
+  customer: CustomerNavbar,
+};
+
 export default function Layout({
   children,
   context,
 }) {
   return (
     <>
-      <h1>{ context }</h1>
+      <header>
+        { NavBars[context]() }
+      </header>
       { children }
     </>
   );
