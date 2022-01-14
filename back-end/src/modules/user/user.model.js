@@ -5,4 +5,5 @@ const create = (userData) => User.create(userData);
 
 module.exports = {
   findOne,
+  create,
 };
