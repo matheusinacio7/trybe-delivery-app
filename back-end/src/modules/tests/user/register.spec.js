@@ -30,7 +30,7 @@ describe('POST /user', () => {
   // };
 
   describe('returns a validation error with invalid', () => {
-    it.only('name', () => request(server)
+    it('name', () => request(server)
       .post(url)
       .send(userWithInvalidName)
       .expect(400)

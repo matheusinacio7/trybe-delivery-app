@@ -5,6 +5,7 @@ const statusDict = {
 };
 
 function handleError(err, _req, res, _next) {
+  console.log('HANDLED');
   const status = statusDict[err.code] || 500;
   const message = err.message || 'Internal server error';
   res.status(status).json({ error: { message, code: err.code, ...err.properties } });
