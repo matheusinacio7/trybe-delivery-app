@@ -1,3 +1,2 @@
-const iDislikeThisRule = null;
 export { default as login } from './login';
-export { iDislikeThisRule };
+export { default as register } from './register';
