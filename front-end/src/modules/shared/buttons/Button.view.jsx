@@ -5,13 +5,15 @@ import { Link } from 'react-router-dom';
 export default function Button({ disabled, children, testId, type, navigateTo }) {
   if (navigateTo) {
     return (
-      <button
-        disabled={ disabled }
-        data-testid={ testId }
-        type="button"
-      >
-        <Link to={ navigateTo }>{ children }</Link>
-      </button>
+      <Link to={ navigateTo }>
+        <button
+          disabled={ disabled }
+          data-testid={ testId }
+          type="button"
+        >
+          { children }
+        </button>
+      </Link>
     );
   }
 
