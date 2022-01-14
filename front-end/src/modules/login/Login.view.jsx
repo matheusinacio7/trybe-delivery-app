@@ -46,6 +46,7 @@ export default function Login() {
               </Button>
               <Button
                 testId="common_login__button-register"
+                navigateTo="/register"
               >
                 Ainda não tenho conta
               </Button>
