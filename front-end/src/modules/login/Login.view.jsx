@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { login } from '../api/user';
 import { Button, Form, FormProvider, Field, Heading } from '../shared';
 
 export default function Login() {
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   return (
     <main>
@@ -15,8 +17,8 @@ export default function Login() {
         onSubmit={ (credentials) => {
           login(credentials)
             .then((response) => {
-              console.log(response);
-              setError(null);
+              console.log(response); // get token and save it in localStorage
+              navigate('/customer/products', { replace: true });
             })
             .catch((err) => {
               setError(err);

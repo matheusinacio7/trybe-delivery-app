@@ -8,6 +8,7 @@ export default function Routes() {
     <ReactRouterRoutes>
       <Route exact path="/" element={ <Navigate to="/login" /> } />
       <Route path="/login" element={ <Login /> } />
+      <Route path="/customer/products" element={ <div>Produtos!</div> } />
     </ReactRouterRoutes>
   );
 }

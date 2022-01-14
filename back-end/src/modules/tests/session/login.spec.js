@@ -16,12 +16,12 @@ describe('POST /session', () => {
     password: '12345',
   };
 
-  // const validUser = {
-  //   email: 'valid@user.com',
-  //   password: '123456',
-  // };
+  const validUser = {
+    email: 'adm@deliveryapp.com',
+    password: '--adm2@21!!--',
+  };
 
-  describe('should return a validation error with invalid', () => {
+  describe('returns a validation error with invalid', () => {
     it('email', () => request(server)
       .post(url)
       .send(userWithInvalidEmail)
@@ -41,7 +41,7 @@ describe('POST /session', () => {
       }));
   });
 
-  it('should return a not found error when the user doesn\'t exist', () => request(server)
+  it('returns a not found error when the user doesn\'t exist', () => request(server)
     .post(url)
     .send({
       email: 'non-existing@user.com',
@@ -50,5 +50,24 @@ describe('POST /session', () => {
     .expect(404)
     .then((res) => {
       expect(res.body.error.message).toBe('User not found');
+    }));
+
+  it('returns an error with a wrong password', () => request(server)
+    .post(url)
+    .send({
+      email: validUser.email,
+      password: 'wrong-password',
+    })
+    .expect(401)
+    .then((res) => {
+      expect(res.body.error.message).toBe('Invalid credentials');
+    }));
+
+  it('returns a token when the user exists', () => request(server)
+    .post(url)
+    .send(validUser)
+    .expect(200)
+    .then((res) => {
+      expect(res.body.token).toBeDefined();
     }));
 });

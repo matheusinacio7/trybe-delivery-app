@@ -1,4 +1,5 @@
 const statusDict = {
+  AUTHENTICATION_ERROR: 401,
   NOT_FOUND: 404,
   VALIDATION_ERROR: 400,
 };

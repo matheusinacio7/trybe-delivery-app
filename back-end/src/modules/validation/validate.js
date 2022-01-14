@@ -2,7 +2,7 @@ const Ajv = require('ajv');
 const addFormats = require('ajv-formats');
 const addErrors = require('ajv-errors');
 
-const { ValidationError } = require('../shared/errors');
+const { ValidationError } = require('../errors');
 
 const loginSchema = require('./schemas/user/session/login.schema.json');
 
