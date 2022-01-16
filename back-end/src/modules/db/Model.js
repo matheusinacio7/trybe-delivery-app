@@ -6,6 +6,10 @@ class Model {
   static create(data) {
     return this.Model.create(data);
   }
+
+  static findAll() {
+    return this.Mode.findAll();
+  }
 }
 
 module.exports = Model;
