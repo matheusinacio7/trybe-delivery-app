@@ -1,3 +1,5 @@
+const extractDataValues = (result) => result.dataValues;
+
 class Model {
   static findOne(query) {
     return this.Model.findOne({ where: query });
@@ -8,7 +10,8 @@ class Model {
   }
 
   static findAll() {
-    return this.Model.findAll();
+    return this.Model.findAll()
+      .then((result) => result.map(extractDataValues))
   }
 }
 
