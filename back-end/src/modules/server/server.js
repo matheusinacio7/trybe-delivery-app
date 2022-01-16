@@ -13,6 +13,8 @@ app.use(
   helmet(),
 );
 
+app.use(express.static('public'));
+
 app.use(router);
 app.use(handleError);
 
