@@ -11,7 +11,7 @@ class Model {
 
   static findAll() {
     return this.Model.findAll()
-      .then((result) => result.map(extractDataValues))
+      .then((result) => result.map(extractDataValues));
   }
 }
 
