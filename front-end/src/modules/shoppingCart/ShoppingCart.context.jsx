@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 export const ShoppingCartContext = createContext({
   addItem: () => {},
+  setItemQuantity: () => {},
   getItemQuantity: () => {},
   removeItem: () => {},
 });
@@ -25,6 +26,13 @@ const reducer = (state, action) => {
       return state;
     }
     return state;
+  case 'SET_ITEM_QUANTITY':
+    if (action.quantity > 0) {
+      state.set(action.id, action.quantity);
+    } else {
+      state.delete(action.id);
+    }
+    return state;
   default:
     return state;
   }
@@ -41,6 +49,10 @@ export function ShoppingCartProvider({ children }) {
     dispatch({ type: 'REMOVE_ITEM', id });
   };
 
+  const setItemQuantity = ({ id, quantity }) => {
+    dispatch({ type: 'SET_ITEM_QUANTITY', id, quantity });
+  };
+
   const getItemQuantity = (id) => {
     if (state.has(id)) {
       return state.get(id);
@@ -53,6 +65,7 @@ export function ShoppingCartProvider({ children }) {
       value={ {
         addItem,
         getItemQuantity,
+        setItemQuantity,
         removeItem,
       } }
     >

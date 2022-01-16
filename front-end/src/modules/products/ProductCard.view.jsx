@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { useShoppingCart } from '../shoppingCart';
 
 export default function ProductCard({ id, name, image, price }) {
-  const { addItem, getItemQuantity, removeItem } = useShoppingCart();
+  const { addItem, setItemQuantity, getItemQuantity, removeItem } = useShoppingCart();
   const [quantity, setQuantity] = useState(getItemQuantity(id));
 
   return (
@@ -39,7 +39,10 @@ export default function ProductCard({ id, name, image, price }) {
           data-testid={ `customer_products__input-card-quantity-${id}` }
           value={ quantity }
           type="number"
-          readOnly
+          onChange={ (e) => {
+            setItemQuantity({ id, quantity: e.target.value });
+            setQuantity(getItemQuantity(id));
+          } }
         />
         <button
           data-testid={ `customer_products__button-card-add-item-${id}` }
