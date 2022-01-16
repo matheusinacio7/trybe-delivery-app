@@ -22,6 +22,9 @@ export default function Layout({
 }
 
 Layout.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
   context: PropTypes.oneOf(['common', 'customer']).isRequired,
 };

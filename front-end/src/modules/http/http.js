@@ -1,3 +1,12 @@
+const parseResponseJson = (response) => response.json();
+
+const throwIfError = (result) => {
+  if (result.error) {
+    throw result.error;
+  }
+  return result;
+};
+
 export const post = ({ url, body }) => fetch(url, {
   method: 'POST',
   headers: {
@@ -5,18 +14,14 @@ export const post = ({ url, body }) => fetch(url, {
   },
   body: JSON.stringify(body),
 })
-  .then((response) => response.json())
-  .then((result) => {
-    if (result.error) {
-      throw result.error;
-    }
-
-    return result;
-  });
+  .then(parseResponseJson)
+  .then(throwIfError);
 
 export const get = ({ url }) => fetch(url, {
   method: 'GET',
   headers: {
     Accept: 'application/json',
   },
-});
+})
+  .then(parseResponseJson)
+  .then(throwIfError);
