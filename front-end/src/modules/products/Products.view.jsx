@@ -8,11 +8,10 @@ import { useApi } from '../api/hooks';
 import ProductCard from './ProductCard.view';
 
 export default function Products() {
-  const { result, error } = useApi(getAll);
+  const { result } = useApi(getAll);
 
   return (
     <Layout context="customer">
-      { console.log({ result, error }) }
       <main>
         <h1>Produtos!</h1>
         { result && result.products && result.products.map((product) => (
