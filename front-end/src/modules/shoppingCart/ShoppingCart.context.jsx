@@ -54,7 +54,11 @@ const reducer = (state, action) => {
       if (state.get(action.id) === 0) {
         state.delete(action.id);
       }
-      saveToLocalStorage(state);
+      if (state.size === 0) {
+        clearFromLocalStorage();
+      } else {
+        saveToLocalStorage(state);
+      }
       return state;
     }
     saveToLocalStorage(state);
@@ -97,6 +101,10 @@ export function ShoppingCartProvider({ children }) {
     return 0;
   };
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART' });
+  };
+
   return (
     <ShoppingCartContext.Provider
       value={ {
@@ -104,6 +112,7 @@ export function ShoppingCartProvider({ children }) {
         getItemQuantity,
         setItemQuantity,
         removeItem,
+        clearCart,
       } }
     >
       { children }
