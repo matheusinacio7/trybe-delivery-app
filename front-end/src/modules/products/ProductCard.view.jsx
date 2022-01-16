@@ -17,7 +17,7 @@ export default function ProductCard({ id, name, image, price }) {
       <p
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        { price }
+        { price.replace('.', ',') }
       </p>
       <div>
         <button
@@ -28,7 +28,7 @@ export default function ProductCard({ id, name, image, price }) {
         </button>
         <input
           data-testid={ `customer_products__input-card-quantity-${id}` }
-          value={ 1 }
+          value={ 0 }
           type="number"
           readOnly
         />
