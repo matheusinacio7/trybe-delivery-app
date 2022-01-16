@@ -8,7 +8,7 @@ class Model {
   }
 
   static findAll() {
-    return this.Mode.findAll();
+    return this.Model.findAll();
   }
 }
 
