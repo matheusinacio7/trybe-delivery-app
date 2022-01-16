@@ -5,6 +5,7 @@ import { login } from '../api/user';
 import { Button } from '../buttons';
 import { Field, Form, FormProvider } from '../forms';
 import { Heading } from '../text';
+import * as localStorage from '../localStorage';
 
 export default function Login() {
   const [error, setError] = useState(null);
@@ -19,7 +20,7 @@ export default function Login() {
         onSubmit={ (credentials) => {
           login(credentials)
             .then((response) => {
-              console.log(response); // get token and save it in localStorage
+              localStorage.save({ key: 'user', data: response });
               navigate('/customer/products', { replace: true });
             })
             .catch((err) => {
