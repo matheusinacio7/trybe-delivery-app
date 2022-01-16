@@ -2,8 +2,8 @@ import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Formik } from 'formik';
 
-import { ValidationError } from '../../errors';
-import { validate } from '../../validation';
+import { ValidationError } from '../errors';
+import { validate } from '../validation';
 
 export default function FormProvider({ schema, children, ...options }) {
   return (
