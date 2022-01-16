@@ -1,29 +1,13 @@
-import { useEffect } from 'react';
+import { useContext } from 'react';
 
-const productQuantityMap = new Map();
+import { ShoppingCartContext } from './ShoppingCart.context';
 
 export default function useShoppingCart() {
-  function addItem(id) {
-    if (productQuantityMap.has(id)) {
-      productQuantityMap.set(id, productQuantityMap.get(id) + 1);
-    } else {
-      productQuantityMap.set(id, 1);
-    }
-  }
+  const { addItem, getItemQuantity, removeItem } = useContext(ShoppingCartContext);
 
-  function removeItem(id) {
-    if (productQuantityMap.has(id)) {
-      productQuantityMap.set(id, productQuantityMap.get(id) - 1);
-    }
-
-    if (productQuantityMap.get(id) === 0) {
-      productQuantityMap.delete(id);
-    }
-  }
-
-  function getItemQuantity(id) {
-    return productQuantityMap.get(id);
-  }
-
-  return { addItem, removeItem, getItemQuantity };
+  return {
+    addItem,
+    getItemQuantity,
+    removeItem,
+  };
 }

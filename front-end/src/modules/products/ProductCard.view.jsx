@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useShoppingCart } from '../shoppingCart';
+
 export default function ProductCard({ id, name, image, price }) {
+  const { addItem, getItemQuantity, removeItem } = useShoppingCart();
+
   return (
     <div>
       <h1
@@ -23,18 +27,20 @@ export default function ProductCard({ id, name, image, price }) {
         <button
           data-testid={ `customer_products__button-card-rm-item-${id}` }
           type="button"
+          onClick={ () => removeItem(id) }
         >
           -
         </button>
         <input
           data-testid={ `customer_products__input-card-quantity-${id}` }
-          value={ 0 }
+          value={ getItemQuantity(id) }
           type="number"
           readOnly
         />
         <button
           data-testid={ `customer_products__button-card-add-item-${id}` }
           type="button"
+          onClick={ () => addItem(id) }
         >
           +
         </button>
