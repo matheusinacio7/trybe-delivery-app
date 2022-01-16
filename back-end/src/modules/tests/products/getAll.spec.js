@@ -2,6 +2,7 @@ const { describe, it } = require('@jest/globals');
 const request = require('supertest');
 
 const server = require('../../server');
+const { resetDb } = require('../helpers');
 
 describe('GET /products', () => {
   beforeEach(function () {
