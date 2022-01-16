@@ -16,7 +16,7 @@ describe('GET /products', () => {
       .get(url)
       .expect(200)
       .then((response) => {
-        expect(response.body.length).toBe(allProductsInDbLength);
+        expect(response.body.products.length).toBe(allProductsInDbLength);
       }));
   });
 });
