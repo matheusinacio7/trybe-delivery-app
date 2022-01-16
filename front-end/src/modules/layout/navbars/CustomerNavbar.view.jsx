@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import * as localStorage from '../../localStorage';
+
 export default function CustomerNavbar() {
   return (
     <nav>
@@ -23,7 +25,7 @@ export default function CustomerNavbar() {
           data-testid="customer_products__element-navbar-user-full-name"
           to="/customer/profile"
         >
-          Meu Perfil
+          { localStorage.get('user').name }
         </Link>
         <Link
           data-testid="customer_products__element-navbar-link-logout"
