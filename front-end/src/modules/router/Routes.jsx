@@ -13,6 +13,7 @@ export default function Routes() {
       <Route path="/login" element={ <Login /> } />
       <Route path="/register" element={ <Register /> } />
       <Route path="/customer/products" element={ <Products /> } />
+      <Route path="/customer/checkout" element={ <main><h1>Checkout!</h1></main> } />
       <Route path="/customer/logout" element={ <Logout /> } />
     </ReactRouterRoutes>
   );
