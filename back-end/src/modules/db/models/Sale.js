@@ -1,14 +1,39 @@
-const Sequelize = require('sequelize');
+const { Sequelize } = require('sequelize');
 const Model = require('../Model');
 const { sale: SaleModel, salesProducts: SalesProductsModel } = require('../../../database/models');
 
-class Product extends Model {
+
+const db = require('../../../database/models');
+
+class Sale extends Model {
   static async create(data) {
-    const transaction = await new Sequelize().transaction();
-    console.log(transaction);
+    try {
+      const result = await db.sequelize.transaction(async (transaction) => {
+        const { products, ...saleData } = data;
+        console.log({ saleData });
+        const sale = await SaleModel.create(saleData, { transaction });
+
+        console.log(sale);
+        
+        const salesProducts = products.map(product => ({
+          saleId: sale.id,
+          productId: product.id,
+          quantity: product.quantity,
+        }));
+
+        await SalesProductsModel.bulkCreate(salesProducts, { transaction });
+
+        // console.log(sale);
+        return sale;
+      });
+
+      console.log(result);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 
-Product.Model = ProductModel;
+Sale.Model = SaleModel;
 
-module.exports = Product;
+module.exports = Sale;

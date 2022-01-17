@@ -139,4 +139,19 @@ describe('POST /sales', () => {
         expect(response.body.error.code).toBe('VALIDATION_ERROR');
       }));
   });
+
+  describe.only('returns a success response with valid', () => {
+    it('sale', () => request(server)
+      .post(url)
+      .send(validSale)
+      .expect(201)
+      .then((response) => {
+        expect(response.body.sale.userId).toBe(validSale.userId);
+        expect(response.body.sale.sellerId).toBe(validSale.sellerId);
+        expect(response.body.sale.totalPrice).toBe(validSale.totalPrice);
+        expect(response.body.sale.deliveryAddress).toBe(validSale.deliveryAddress);
+        expect(response.body.sale.deliveryNumber).toBe(validSale.deliveryNumber);
+        expect(response.body.sale.products).toBe(validSale.products);
+      }));
+  });
 });
