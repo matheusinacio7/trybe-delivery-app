@@ -30,6 +30,7 @@ export default function Products() {
           <Button
             navigateTo="/customer/checkout"
             testId="customer_products__button-cart"
+            disabled={ total === 0 }
           >
             <span>Ver carrinho: </span>
             <span>R$ </span>
