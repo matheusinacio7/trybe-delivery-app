@@ -5,6 +5,8 @@ import Layout from '../layout';
 import useProducts from './useProducts';
 import { useShoppingCart } from '../shoppingCart';
 
+import { Button } from '../buttons';
+
 import ProductCard from './ProductCard.view';
 
 export default function Products() {
@@ -25,13 +27,16 @@ export default function Products() {
           />
         )) }
         <div>
-          <p>
+          <Button
+            navigateTo="/customer/checkout"
+            testId="customer_products__button-cart"
+          >
             <span>Ver carrinho: </span>
             <span>R$ </span>
             <span data-testid="customer_products__checkout-bottom-value">
               { total.toFixed(2).replace('.', ',') }
             </span>
-          </p>
+          </Button>
         </div>
       </main>
     </Layout>
