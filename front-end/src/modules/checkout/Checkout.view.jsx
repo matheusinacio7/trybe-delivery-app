@@ -15,6 +15,7 @@ export default function Checkout() {
   const renderTableHead = () => (
     <thead>
       <tr>
+        <th>Num</th>
         <th>Produto</th>
         <th>Quantidade</th>
         <th>Preço Unitário</th>
@@ -30,10 +31,11 @@ export default function Checkout() {
     }
 
     const testIds = {
+      productNumber: 'customer_checkout__element-order-table-item-number',
       productName: 'customer_checkout__element-order-table-name',
       productQuantity: 'customer_checkout__element-order-table-quantity',
-      productPrice: 'customer_checkout__element-order-table-price',
-      productTotal: 'customer_checkout__element-order-table-total',
+      productPrice: 'customer_checkout__element-order-table-unit-price',
+      productTotal: 'customer_checkout__element-order-table-sub-total',
       productRemove: 'customer_checkout__element-order-table-remove',
     };
 
@@ -46,6 +48,9 @@ export default function Checkout() {
 
             return (
               <tr key={ productId }>
+                <td data-testid={ `${testIds.productNumber}-${index}` }>
+                  { index + 1 }
+                </td>
                 <td data-testid={ `${testIds.productName}-${index}` }>
                   { product.name }
                 </td>
@@ -55,7 +60,7 @@ export default function Checkout() {
                 <td data-testid={ `${testIds.productPrice}-${index}` }>
                   { product.price.replace('.', ',') }
                 </td>
-                <td data-testid={ `${testIds.productQuantity}-${index}` }>
+                <td data-testid={ `${testIds.productTotal}-${index}` }>
                   { (product.price * quantity).toFixed(2).replace('.', ',') }
                 </td>
                 <td data-testid={ `${testIds.productRemove}-${index}` }>
