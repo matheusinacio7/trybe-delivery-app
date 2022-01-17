@@ -10,7 +10,7 @@ describe('POST /sales', () => {
     resetDb();
   });
 
-  const url = '/sale';
+  const url = '/sales';
 
   const saleWithInvalidProductQuantity = {
     userId: 3,
@@ -18,7 +18,6 @@ describe('POST /sales', () => {
     totalPrice: '10.00',
     deliveryAddress: '123 Main St',
     deliveryNumber: '123456789',
-    saleDate: new Date().toISOString(),
     products: [
       {
         productId: 1,
@@ -37,7 +36,6 @@ describe('POST /sales', () => {
     totalPrice: '10.00',
     deliveryAddress: '123 Main St',
     deliveryNumber: '123456789',
-    saleDate: new Date().toISOString(),
     products: [
       {
         productId: 0,
@@ -56,7 +54,6 @@ describe('POST /sales', () => {
     totalPrice: '10.00',
     deliveryAddress: '123 Main St',
     deliveryNumber: '123456789',
-    saleDate: new Date().toISOString(),
     products: [
       {
         productId: 1,
@@ -75,7 +72,6 @@ describe('POST /sales', () => {
     totalPrice: '10.00',
     deliveryAddress: '123 Main St',
     deliveryNumber: '123456789',
-    saleDate: new Date().toISOString(),
     products: [
       {
         productId: 1,
@@ -94,7 +90,6 @@ describe('POST /sales', () => {
     totalPrice: '10.00',
     deliveryAddress: '123 Main St',
     deliveryNumber: '123456789',
-    saleDate: new Date().toISOString(),
     products: [
       {
         productId: 1,
@@ -108,7 +103,7 @@ describe('POST /sales', () => {
   };
 
   describe('returns a validation error with invalid', () => {
-    it('product quantity', () => request(server)
+    it.only('product quantity', () => request(server)
       .post(url)
       .send(saleWithInvalidProductQuantity)
       .expect(400)
