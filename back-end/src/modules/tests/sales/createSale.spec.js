@@ -82,6 +82,26 @@ describe('POST /sales', () => {
     ],
   };
 
+  describe('returns an authentication error', () => {
+    it('when no token is provided', () => request(server)
+      .post(url)
+      .send(validSale)
+      .expect(401)
+      .then((res) => {
+        expect(res.body.error).toBe('A token is required');
+      }));
+
+    it('when an invalid token is provided', () => request(server)
+      .post(url)
+      .set(tokenHeader[0], 'invalid-token')
+      .send(validSale)
+      .expect(401)
+      .then((res) => {
+        expect(res.body.error).toBe('Invalid token');
+      }));
+  });
+
+
   describe('returns a validation error with invalid', () => {
     it('product quantity', () => request(server)
       .post(url)
