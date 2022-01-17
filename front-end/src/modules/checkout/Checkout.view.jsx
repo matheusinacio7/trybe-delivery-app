@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Button } from '../buttons';
 import { Heading } from '../text';
 import Layout from '../layout';
 
@@ -10,7 +11,7 @@ import CheckoutForm from './CheckoutForm.view';
 
 export default function Checkout() {
   const { products } = useProducts();
-  const { cartState, total } = useShoppingCart();
+  const { cartState, total, setItemQuantity } = useShoppingCart();
 
   const renderTableHead = () => (
     <thead>
@@ -63,8 +64,13 @@ export default function Checkout() {
                 <td data-testid={ `${testIds.productTotal}-${index}` }>
                   { (product.price * quantity).toFixed(2).replace('.', ',') }
                 </td>
-                <td data-testid={ `${testIds.productRemove}-${index}` }>
-                  <button type="button">Remover</button>
+                <td>
+                  <Button
+                    onClick={ () => setItemQuantity({ id: productId, quantity: 0 }) }
+                    testId={ `${testIds.productRemove}-${index}` }
+                  >
+                    Remover
+                  </Button>
                 </td>
               </tr>
             );
@@ -77,8 +83,6 @@ export default function Checkout() {
   return (
     <Layout context="customer">
       <main>
-        {/* { console.log({ cartState, products }) } */}
-        { console.log(total) }
         <Heading level={ 1 }>Finalizar pedido</Heading>
         <section>
           <table>

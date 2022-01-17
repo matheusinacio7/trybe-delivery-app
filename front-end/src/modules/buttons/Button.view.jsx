@@ -2,7 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export default function Button({ disabled, children, testId, type, navigateTo }) {
+export default function Button({
+  disabled,
+  children,
+  testId,
+  type,
+  navigateTo,
+  onClick,
+}) {
   if (navigateTo) {
     return (
       <Link to={ navigateTo }>
@@ -24,6 +31,7 @@ export default function Button({ disabled, children, testId, type, navigateTo })
         disabled={ disabled }
         type="button"
         data-testid={ testId }
+        onClick={ onClick }
       >
         { children }
       </button>
@@ -35,6 +43,7 @@ export default function Button({ disabled, children, testId, type, navigateTo })
       disabled={ disabled }
       type="submit"
       data-testid={ testId }
+      onClick={ onClick }
     >
       { children }
     </button>
@@ -47,10 +56,12 @@ Button.propTypes = {
   type: PropTypes.oneOf(['button', 'submit']),
   disabled: PropTypes.bool,
   navigateTo: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
   type: 'button',
   disabled: false,
   navigateTo: null,
+  onClick: () => null,
 };
