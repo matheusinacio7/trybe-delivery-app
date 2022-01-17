@@ -140,7 +140,7 @@ describe('POST /sales', () => {
       }));
   });
 
-  describe.only('returns a success response with valid', () => {
+  describe('returns a success response with valid', () => {
     it('sale', () => request(server)
       .post(url)
       .send(validSale)
@@ -151,7 +151,7 @@ describe('POST /sales', () => {
         expect(response.body.sale.totalPrice).toBe(validSale.totalPrice);
         expect(response.body.sale.deliveryAddress).toBe(validSale.deliveryAddress);
         expect(response.body.sale.deliveryNumber).toBe(validSale.deliveryNumber);
-        expect(response.body.sale.products).toBe(validSale.products);
+        expect(response.body.sale.products).toEqual(validSale.products);
       }));
   });
 });

@@ -11,8 +11,8 @@ const create = async (saleData) => {
     ...saleData,
   };
 
-  const response = await Model.create(newSale);
-  console.log(response);
+  const { sale, products } = await Model.create(newSale);
+  return { ...sale, products };
 }
 
 module.exports = {
