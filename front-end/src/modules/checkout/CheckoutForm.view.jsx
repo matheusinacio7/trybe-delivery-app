@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Button } from '../buttons';
 import { Field, Form, FormProvider } from '../forms';
 
 export default function CheckoutForm() {
@@ -35,6 +36,12 @@ export default function CheckoutForm() {
           type="number"
           testId="customer_checkout__input-addressNumber"
         />
+        <Button
+          type="submit"
+          testId="customer_checkout__button-submit-order"
+        >
+          Finalizar Pedido
+        </Button>
       </Form>
     </FormProvider>
   );
