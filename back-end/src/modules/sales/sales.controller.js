@@ -1,4 +1,4 @@
-const Model = require('./user.model');
+const Model = require('./sales.model');
 
 const { validate } = require('../validation');
 

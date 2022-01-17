@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Controller = require('./sale.controller');
+const Controller = require('./sales.controller');
 
 router.post('/', async (req, res) => {
   const sale = await Controller.create(req.body);
