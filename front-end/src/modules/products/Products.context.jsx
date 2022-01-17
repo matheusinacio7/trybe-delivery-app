@@ -16,7 +16,7 @@ export const ProductsProvider = ({ children }) => {
   return (
     <ProductsContext.Provider
       value={ {
-        products: result?.products,
+        products: result && result.products,
         error,
         loading,
       } }
