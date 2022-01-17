@@ -10,26 +10,28 @@ class Sale extends Model {
     try {
       const result = await db.sequelize.transaction(async (transaction) => {
         const { products, ...saleData } = data;
-        console.log({ saleData });
+        // console.log({ saleData });
         const sale = await SaleModel.create(saleData, { transaction });
 
-        console.log(sale);
-        
+        // console.log(sale);
+
         const salesProducts = products.map(product => ({
           saleId: sale.id,
-          productId: product.id,
+          productId: product.productId,
           quantity: product.quantity,
         }));
 
+        console.log(salesProducts);
+
         await SalesProductsModel.bulkCreate(salesProducts, { transaction });
 
-        // console.log(sale);
-        return sale;
+        return { sale: sale.dataValues, products };
       });
 
-      console.log(result);
+      return result;
     } catch (err) {
-      console.log(err);
+      console.error(err);
+      throw err;
     }
   }
 }
