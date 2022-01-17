@@ -3,12 +3,25 @@ import React from 'react';
 import { Button } from '../buttons';
 import { Field, Form, FormProvider } from '../forms';
 
+import { useShoppingCart } from '../shoppingCart';
+// import { get } from '../localStorage';
+
+// import * as salesApi from '../api/sales';
+
 export default function CheckoutForm() {
+  const { cartState, total } = useShoppingCart();
+
   return (
     <FormProvider
       initialValues={ { seller: '', address: '', number: '' } }
       schema="checkout"
       initialErrors={ { seller: 'Invalid seller' } }
+      onSubmit={ ({ seller, address, number }) => {
+        console.log({ seller, address, number, cartState, total });
+        // salesApi.create({
+        //   userId: get('userId'),
+        // })
+      } }
       validateOnChange
     >
       <Form>
