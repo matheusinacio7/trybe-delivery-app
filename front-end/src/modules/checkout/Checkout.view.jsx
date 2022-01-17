@@ -27,19 +27,36 @@ export default function Checkout() {
       return <Heading level={ 2 }>Seu carrinho está vazio!</Heading>;
     }
 
+    const testIds = {
+      productName: 'customer_checkout__element-order-table-name',
+      productQuantity: 'customer_checkout__element-order-table-quantity',
+      productPrice: 'customer_checkout__element-order-table-price',
+      productTotal: 'customer_checkout__element-order-table-total',
+      productRemove: 'customer_checkout__element-order-table-remove',
+    };
+
     return (
       <tbody>
         {
-          products && Array.from(cartState.entries()).map(([productId, quantity]) => {
+          products && Array.from(cartState.entries()).map(([productId, quantity],
+            index) => {
             const product = products.find((p) => p.id === productId);
 
             return (
               <tr key={ productId }>
-                <td>{ product.name }</td>
-                <td>{ quantity }</td>
-                <td>{ product.price.replace('.', ',') }</td>
-                <td>{ (product.price * quantity).toFixed(2).replace('.', ',') }</td>
-                <td>
+                <td data-testid={ `${testIds.productName}-${index}` }>
+                  { product.name }
+                </td>
+                <td data-testid={ `${testIds.productQuantity}-${index}` }>
+                  { quantity }
+                </td>
+                <td data-testid={ `${testIds.productPrice}-${index}` }>
+                  { product.price.replace('.', ',') }
+                </td>
+                <td data-testid={ `${testIds.productQuantity}-${index}` }>
+                  { (product.price * quantity).toFixed(2).replace('.', ',') }
+                </td>
+                <td data-testid={ `${testIds.productRemove}-${index}` }>
                   <button type="button">Remover</button>
                 </td>
               </tr>
