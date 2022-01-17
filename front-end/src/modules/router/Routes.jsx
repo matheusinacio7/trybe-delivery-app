@@ -3,7 +3,7 @@ import { Navigate, Routes as ReactRouterRoutes, Route } from 'react-router-dom';
 
 import Login from '../login';
 import Logout from '../logout';
-import Products from '../products';
+import { Products } from '../products';
 import Register from '../register';
 
 export default function Routes() {

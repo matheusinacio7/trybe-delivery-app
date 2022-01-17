@@ -2,20 +2,20 @@ import React from 'react';
 
 import Layout from '../layout';
 
-import { getAll } from '../api/products';
-import { useApi } from '../api/hooks';
+import useProducts from './useProducts';
+import { useShoppingCart } from '../shoppingCart';
 
 import ProductCard from './ProductCard.view';
 
 export default function Products() {
-  const { result, error } = useApi(getAll);
+  const { products } = useProducts();
+  const { total } = useShoppingCart();
 
   return (
     <Layout context="customer">
-      { console.log({ result, error }) }
       <main>
         <h1>Produtos!</h1>
-        { result && result.products && result.products.map((product) => (
+        { products && products.map((product) => (
           <ProductCard
             key={ product.id }
             id={ product.id }
@@ -24,6 +24,15 @@ export default function Products() {
             price={ product.price }
           />
         )) }
+        <div>
+          <p>
+            <span>Ver carrinho: </span>
+            <span>R$ </span>
+            <span data-testid="customer_products__checkout-bottom-value">
+              { total.toFixed(2).replace('.', ',') }
+            </span>
+          </p>
+        </div>
       </main>
     </Layout>
   );
