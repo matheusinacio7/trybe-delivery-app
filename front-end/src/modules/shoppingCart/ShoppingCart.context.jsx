@@ -12,6 +12,7 @@ export const ShoppingCartContext = createContext({
   getTotal: () => {},
   removeItem: () => {},
   clearCart: () => {},
+  cartState: new Map(),
 });
 
 const saveToLocalStorage = (state) => {
@@ -136,6 +137,7 @@ export function ShoppingCartProvider({ children }) {
         setItemQuantity,
         removeItem,
         clearCart,
+        cartState,
       } }
     >
       { children }

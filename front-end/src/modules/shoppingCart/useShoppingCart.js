@@ -12,6 +12,7 @@ export default function useShoppingCart() {
     getItemQuantity,
     removeItem,
     clearCart,
+    cartState,
   } = useContext(ShoppingCartContext);
 
   return {
@@ -21,5 +22,6 @@ export default function useShoppingCart() {
     getItemQuantity,
     removeItem,
     clearCart,
+    cartState,
   };
 }
