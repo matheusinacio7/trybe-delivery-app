@@ -37,7 +37,7 @@
           "quantity": {
             "type": "number",
             "minimum": 1,
-            "errorMessage": "Invalid quantity"
+            "errorMessage": "Invalid product quantity"
           }
         },
         "required": [
@@ -47,6 +47,13 @@
       }
     }
   },
-  "required": ["name", "email", "password"],
+  "required": [
+    "userId",
+    "sellerId",
+    "totalPrice",
+    "deliveryAddress",
+    "deliveryNumber",
+    "products"
+  ],
   "additionalProperties": false
 }

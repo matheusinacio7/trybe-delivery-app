@@ -103,7 +103,7 @@ describe('POST /sales', () => {
   };
 
   describe('returns a validation error with invalid', () => {
-    it.only('product quantity', () => request(server)
+    it('product quantity', () => request(server)
       .post(url)
       .send(saleWithInvalidProductQuantity)
       .expect(400)
