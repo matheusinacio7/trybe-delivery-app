@@ -8,7 +8,7 @@ import { useShoppingCart } from '../shoppingCart';
 
 export default function Checkout() {
   const { products } = useProducts();
-  const { cartState } = useShoppingCart();
+  const { cartState, total } = useShoppingCart();
 
   const renderTableHead = () => (
     <thead>
@@ -70,13 +70,22 @@ export default function Checkout() {
   return (
     <Layout context="customer">
       <main>
-        { console.log({ cartState, products }) }
-        { console.log(Array.from(cartState.entries())) }
+        {/* { console.log({ cartState, products }) } */}
+        { console.log(total) }
         <Heading level={ 1 }>Finalizar pedido</Heading>
-        <table>
-          { renderTableHead() }
-          { renderTableBody() }
-        </table>
+        <section>
+          <table>
+            { renderTableHead() }
+            { renderTableBody() }
+          </table>
+          <div>
+            <span>Total: </span>
+            <span>R$ </span>
+            <span data-testid="customer_checkout__element-order-total-price">
+              { total.toFixed(2).replace('.', ',') }
+            </span>
+          </div>
+        </section>
       </main>
     </Layout>
   );

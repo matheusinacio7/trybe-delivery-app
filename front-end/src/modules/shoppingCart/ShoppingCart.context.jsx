@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import * as localStorage from '../localStorage';
@@ -42,7 +42,7 @@ const clearFromLocalStorage = () => {
 
 export function ShoppingCartProvider({ children }) {
   const [cartState, setCartState] = useState(() => getFromLocalStorage());
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
 
   const getTotal = () => {
     if (!products || !products.length) return 0;
@@ -62,6 +62,12 @@ export function ShoppingCartProvider({ children }) {
   const updateTotal = () => {
     setTotal(getTotal());
   };
+
+  useEffect(() => {
+    if (!loading) {
+      updateTotal();
+    }
+  }, [loading]);
 
   const addItem = (id) => {
     setCartState((state) => {
