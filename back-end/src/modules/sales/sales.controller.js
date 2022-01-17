@@ -7,6 +7,7 @@ const create = async (saleData) => {
 
   const newSale = {
     saleDate: new Date().toISOString(),
+    status: 'PENDING',
     ...saleData,
   };
 
