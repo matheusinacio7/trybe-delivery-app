@@ -6,6 +6,8 @@ import Layout from '../layout';
 import { useProducts } from '../products';
 import { useShoppingCart } from '../shoppingCart';
 
+import CheckoutForm from './CheckoutForm.view';
+
 export default function Checkout() {
   const { products } = useProducts();
   const { cartState, total } = useShoppingCart();
@@ -85,6 +87,9 @@ export default function Checkout() {
               { total.toFixed(2).replace('.', ',') }
             </span>
           </div>
+        </section>
+        <section>
+          <CheckoutForm />
         </section>
       </main>
     </Layout>
