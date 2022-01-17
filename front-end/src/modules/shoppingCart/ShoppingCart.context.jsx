@@ -1,12 +1,15 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import * as localStorage from '../localStorage';
+
+import { useProducts } from '../products';
 
 export const ShoppingCartContext = createContext({
   addItem: () => {},
   setItemQuantity: () => {},
   getItemQuantity: () => {},
+  getTotal: () => {},
   removeItem: () => {},
   clearCart: () => {},
 });
@@ -21,12 +24,11 @@ const saveToLocalStorage = (state) => {
 
 const getFromLocalStorage = () => {
   const storedObject = localStorage.get('shoppingCart');
-  const parsedObjectState = JSON.parse(storedObject);
   const mapState = new Map();
 
-  if (parsedObjectState) {
-    Object.entries(parsedObjectState).forEach(([key, value]) => {
-      mapState.set(key, value);
+  if (storedObject) {
+    Object.entries(storedObject).forEach(([key, value]) => {
+      mapState.set(Number(key), value);
     });
   }
 
@@ -37,78 +39,99 @@ const clearFromLocalStorage = () => {
   localStorage.remove('shoppingCart');
 };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-  case 'ADD_ITEM':
-    if (state.has(action.id)) {
-      state.set(action.id, state.get(action.id) + 1);
-      saveToLocalStorage(state);
-      return state;
-    }
-    state.set(action.id, 1);
-    saveToLocalStorage(state);
-    return state;
-  case 'REMOVE_ITEM':
-    if (state.has(action.id)) {
-      state.set(action.id, state.get(action.id) - 1);
-      if (state.get(action.id) === 0) {
-        state.delete(action.id);
+export function ShoppingCartProvider({ children }) {
+  const [cartState, setCartState] = useState(() => getFromLocalStorage());
+  const { products } = useProducts();
+
+  const getTotal = () => {
+    if (!products || !products.length) return 0;
+
+    let total = 0;
+
+    cartState.forEach((quantity, id) => {
+      const product = products.find((prod) => prod.id === id);
+      total += product.price * quantity;
+    });
+
+    return total;
+  };
+
+  const [total, setTotal] = useState(() => getTotal());
+
+  const updateTotal = () => {
+    setTotal(getTotal());
+  };
+
+  const addItem = (id) => {
+    setCartState((state) => {
+      if (state.has(id)) {
+        state.set(id, state.get(id) + 1);
+      } else {
+        state.set(id, 1);
       }
+      saveToLocalStorage(state);
+      updateTotal();
+      return state;
+    });
+  };
+
+  const deleteItemAndManageStorage = (id) => {
+    setCartState((state) => {
+      state.delete(id);
       if (state.size === 0) {
         clearFromLocalStorage();
       } else {
         saveToLocalStorage(state);
       }
+      updateTotal();
       return state;
-    }
-    saveToLocalStorage(state);
-    return state;
-  case 'SET_ITEM_QUANTITY':
-    if (action.quantity > 0) {
-      state.set(action.id, action.quantity);
-    } else {
-      state.delete(action.id);
-    }
-    saveToLocalStorage(state);
-    return state;
-  case 'CLEAR_CART':
-    clearFromLocalStorage();
-    return new Map();
-  default:
-    return state;
-  }
-};
-
-export function ShoppingCartProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, getFromLocalStorage());
-
-  const addItem = (id) => {
-    dispatch({ type: 'ADD_ITEM', id });
+    });
   };
 
   const removeItem = (id) => {
-    dispatch({ type: 'REMOVE_ITEM', id });
+    setCartState((state) => {
+      if (state.has(id)) {
+        state.set(id, state.get(id) - 1);
+        if (state.get(id) === 0) {
+          deleteItemAndManageStorage(id);
+        }
+      }
+      saveToLocalStorage(state);
+      return state;
+    });
   };
 
   const setItemQuantity = ({ id, quantity }) => {
-    dispatch({ type: 'SET_ITEM_QUANTITY', id, quantity });
+    setCartState((state) => {
+      if (quantity > 0) {
+        state.set(id, quantity);
+      } else {
+        deleteItemAndManageStorage(id);
+      }
+      saveToLocalStorage(state);
+      updateTotal();
+      return state;
+    });
   };
 
   const getItemQuantity = (id) => {
-    if (state.has(id)) {
-      return state.get(id);
+    if (cartState.has(Number(id))) {
+      return cartState.get(Number(id));
     }
     return 0;
   };
 
   const clearCart = () => {
-    dispatch({ type: 'CLEAR_CART' });
+    setCartState(new Map());
+    clearFromLocalStorage();
+    setTotal(0);
   };
 
   return (
     <ShoppingCartContext.Provider
       value={ {
         addItem,
+        total,
         getItemQuantity,
         setItemQuantity,
         removeItem,

@@ -7,6 +7,7 @@ import { ShoppingCartContext } from './ShoppingCart.context';
 export default function useShoppingCart() {
   const {
     addItem,
+    total,
     setItemQuantity,
     getItemQuantity,
     removeItem,
@@ -15,6 +16,7 @@ export default function useShoppingCart() {
 
   return {
     addItem,
+    total,
     setItemQuantity,
     getItemQuantity,
     removeItem,

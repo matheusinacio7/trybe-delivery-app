@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useShoppingCart } from '../shoppingCart';
@@ -6,6 +6,10 @@ import { useShoppingCart } from '../shoppingCart';
 export default function ProductCard({ id, name, image, price }) {
   const { addItem, setItemQuantity, getItemQuantity, removeItem } = useShoppingCart();
   const [quantity, setQuantity] = useState(getItemQuantity(id));
+
+  useEffect(() => {
+    setItemQuantity({ id, quantity });
+  }, [quantity]);
 
   return (
     <div>
@@ -30,7 +34,7 @@ export default function ProductCard({ id, name, image, price }) {
           type="button"
           onClick={ () => {
             removeItem(id);
-            setQuantity(getItemQuantity(id));
+            setQuantity((previous) => Math.max(previous - 1, 0));
           } }
         >
           -
@@ -40,8 +44,7 @@ export default function ProductCard({ id, name, image, price }) {
           value={ quantity }
           type="number"
           onChange={ (e) => {
-            setItemQuantity({ id, quantity: e.target.value });
-            setQuantity(getItemQuantity(id));
+            setQuantity(Math.max(Number(e.target.value), 0));
           } }
         />
         <button
@@ -49,7 +52,7 @@ export default function ProductCard({ id, name, image, price }) {
           type="button"
           onClick={ () => {
             addItem(id);
-            setQuantity(getItemQuantity(id));
+            setQuantity((previous) => previous + 1);
           } }
         >
           +
