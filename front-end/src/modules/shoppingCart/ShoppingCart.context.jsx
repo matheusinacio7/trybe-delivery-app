@@ -112,10 +112,10 @@ export function ShoppingCartProvider({ children }) {
     setCartState((state) => {
       if (quantity > 0) {
         state.set(id, quantity);
+        saveToLocalStorage(state);
       } else {
         deleteItemAndManageStorage(id);
       }
-      saveToLocalStorage(state);
       updateTotal();
       return state;
     });
