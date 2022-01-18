@@ -39,7 +39,7 @@ export default function CustomerOrders() {
                 <section
                   data-testid={ `customer_orders__element-delivery-status-${id}` }
                 >
-                  { status.toUpperCase() }
+                  { status }
                 </section>
                 <section>
                   <div
