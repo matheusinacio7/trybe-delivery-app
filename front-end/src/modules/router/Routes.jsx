@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, Routes as ReactRouterRoutes, Route } from 'react-router-dom';
 
+import Checkout from '../checkout';
 import Login from '../login';
 import Logout from '../logout';
 import { Products } from '../products';
@@ -13,8 +14,9 @@ export default function Routes() {
       <Route path="/login" element={ <Login /> } />
       <Route path="/register" element={ <Register /> } />
       <Route path="/customer/products" element={ <Products /> } />
-      <Route path="/customer/checkout" element={ <main><h1>Checkout!</h1></main> } />
+      <Route path="/customer/checkout" element={ <Checkout /> } />
       <Route path="/customer/logout" element={ <Logout /> } />
+      <Route path="/customer/orders/:orderId" element={ <main><h1>Pedido!</h1></main> } />
     </ReactRouterRoutes>
   );
 }
