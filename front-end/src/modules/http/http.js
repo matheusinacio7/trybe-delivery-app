@@ -18,10 +18,11 @@ export const post = ({ url, body, headers }) => fetch(url, {
   .then(parseResponseJson)
   .then(throwIfError);
 
-export const get = ({ url }) => fetch(url, {
+export const get = ({ url, headers }) => fetch(url, {
   method: 'GET',
   headers: {
     Accept: 'application/json',
+    ...headers,
   },
 })
   .then(parseResponseJson)
