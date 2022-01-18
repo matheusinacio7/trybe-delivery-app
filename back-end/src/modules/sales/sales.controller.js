@@ -29,7 +29,10 @@ const get = async ({ userId, userRole, searchByCustomer }) => {
     customer: customerGetSales,
   };
 
-  return getFunctions[userRole]({ userId, searchByCustomer });
+  return getFunctions[userRole]({
+    userId,
+    searchByCustomer: searchByCustomer ? Number(searchByCustomer) : null,
+  });
 };
 
 module.exports = {
