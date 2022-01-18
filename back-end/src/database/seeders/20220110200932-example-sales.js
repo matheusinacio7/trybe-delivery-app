@@ -11,7 +11,7 @@ module.exports = {
         delivery_address: 'Rua dos bobos',
         delivery_number: '1',
         sale_date: new Date(),
-        status: 'Pendente',
+        status: 'PENDING',
       },
     ]);
   },
