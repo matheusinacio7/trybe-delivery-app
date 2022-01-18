@@ -22,6 +22,7 @@ const options = {
     timezone: 'Z',
   },
   logging: false,
+  timestamps: false,
   underscored: true,
 };
 

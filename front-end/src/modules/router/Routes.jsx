@@ -5,7 +5,7 @@ import Checkout from '../checkout';
 import Home from '../home';
 import Login from '../login';
 import Logout from '../logout';
-import { CustomerOrders } from '../orders';
+import { CustomerOrderDetails, CustomerOrders } from '../orders';
 import { Products } from '../products';
 import Register from '../register';
 
@@ -18,7 +18,7 @@ export default function Routes() {
       <Route path="/customer/products" element={ <Products /> } />
       <Route path="/customer/checkout" element={ <Checkout /> } />
       <Route path="/customer/logout" element={ <Logout /> } />
-      <Route path="/customer/orders/:orderId" element={ <main><h1>Pedido!</h1></main> } />
+      <Route path="/customer/orders/:orderId" element={ <CustomerOrderDetails /> } />
       <Route path="/customer/orders" element={ <CustomerOrders /> } />
     </ReactRouterRoutes>
   );

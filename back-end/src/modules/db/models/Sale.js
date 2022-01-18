@@ -1,5 +1,9 @@
+const { QueryTypes } = require('sequelize');
 const Model = require('../Model');
-const { sale: SaleModel, salesProducts: SalesProductsModel } = require('../../../database/models');
+const {
+  sale: SaleModel,
+  salesProducts: SalesProductsModel,
+ } = require('../../../database/models');
 
 const db = require('../../../database/models');
 
@@ -27,6 +31,50 @@ class Sale extends Model {
       console.error(err);
       throw err;
     }
+  }
+
+  static async findOne({ query, includeProducts }) {
+    const result = await SaleModel.findOne({ where: query });
+
+    const { sellerId, ...sale } = result.dataValues;
+
+    if (!includeProducts) return sale;
+
+    const products = await db.sequelize.query(
+      `SELECT
+        p.id,
+        p.name,
+        p.price,
+        p.url_image,
+        sp.quantity
+      FROM products AS p
+      INNER JOIN salesProducts AS sp
+        ON sp.product_id = p.id
+      WHERE sp.sale_id = ?;`,
+      {
+        type: QueryTypes.SELECT,
+        replacements: [sale.id],
+      }
+    );
+
+    const sellerQueryResult = await db.sequelize.query(
+      `
+      SELECT
+        name
+      FROM users
+      WHERE id = ?;
+      `,
+      {
+        type: QueryTypes.SELECT,
+        replacements: [sellerId],
+      },
+    );
+
+    return {
+      ...sale,
+      products,
+      sellerName: sellerQueryResult[0].name,
+    };
   }
 }
 

@@ -24,7 +24,7 @@ const customerGetSales = async ({ userId, searchByCustomer }) => {
   return Model.search({ userId });
 };
 
-const get = async ({ userId, userRole, searchByCustomer }) => {
+const getMany = async ({ userId, userRole, searchByCustomer }) => {
   const getFunctions = {
     customer: customerGetSales,
   };
@@ -35,7 +35,25 @@ const get = async ({ userId, userRole, searchByCustomer }) => {
   });
 };
 
+const getDetailed = async ({ userId, userRole, saleId }) => {
+  const attributesToCompare = {
+    customer: 'userId',
+    seller: 'sellerId',
+  };
+
+  const sale = await Model.findOne({ query: { id: saleId }, includeProducts: true });
+
+  const attributeToCompare = attributesToCompare[userRole];
+
+  if (sale[attributeToCompare] !== userId) {
+    throw new ForbiddenError('Not allowed');
+  }
+
+  return sale;
+};
+
 module.exports = {
   create,
-  get,
+  getMany,
+  getDetailed,
 };

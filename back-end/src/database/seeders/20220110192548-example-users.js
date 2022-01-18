@@ -24,6 +24,13 @@ module.exports = {
         password: '1c37466c159755ce1fa181bd247cb925',
         role: 'customer',
       },
+      {
+        id: 4,
+        name: 'Cliente Brabo',
+        email: 'brabo@cliente.com',
+        password: '90a8963e076aa22cd67be44cb6333722', // 123superpassword
+        role: 'customer',
+      }
     ]);
   },
 
