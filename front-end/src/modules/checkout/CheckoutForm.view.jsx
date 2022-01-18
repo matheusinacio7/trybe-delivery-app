@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '../buttons';
 import { Field, Form, FormProvider } from '../forms';
@@ -10,6 +11,7 @@ import * as salesApi from '../api/sales';
 
 export default function CheckoutForm() {
   const { cartState, total } = useShoppingCart();
+  const navigate = useNavigate();
 
   return (
     <FormProvider
@@ -29,7 +31,9 @@ export default function CheckoutForm() {
           sellerId: Number(seller),
           token,
           totalPrice: total.toFixed(2),
-        }).then(console.log)
+        }).then(({ sale }) => {
+          navigate(`/customer/orders/${sale.id}`);
+        })
           .catch(console.log);
       } }
       validateOnChange

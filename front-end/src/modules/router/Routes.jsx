@@ -16,6 +16,7 @@ export default function Routes() {
       <Route path="/customer/products" element={ <Products /> } />
       <Route path="/customer/checkout" element={ <Checkout /> } />
       <Route path="/customer/logout" element={ <Logout /> } />
+      <Route path="/customer/orders/:orderId" element={ <main><h1>Pedido!</h1></main> } />
     </ReactRouterRoutes>
   );
 }
