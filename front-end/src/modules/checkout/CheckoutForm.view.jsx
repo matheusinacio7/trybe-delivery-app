@@ -17,16 +17,18 @@ export default function CheckoutForm() {
       schema="checkout"
       initialErrors={ { seller: 'Invalid seller' } }
       onSubmit={ ({ seller, address, number }) => {
-        // console.log({ seller, address, number, cartState, total });
         const { token } = localStorage.get('user');
 
         salesApi.create({
           deliveryAddress: address,
-          deliveryNumber: number,
-          products: cartState,
-          sellerId: seller,
+          deliveryNumber: String(number),
+          products: Array.from(cartState.entries()).map(([productId, quantity]) => ({
+            productId,
+            quantity,
+          })),
+          sellerId: Number(seller),
           token,
-          totalPrice: total,
+          totalPrice: total.toFixed(2),
         }).then(console.log)
           .catch(console.log);
       } }
