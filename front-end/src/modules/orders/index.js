@@ -1,3 +1,2 @@
-const lmao = null;
 export { default as CustomerOrders } from './CustomerOrders.view';
-export { lmao };
+export { default as CustomerOrderDetails } from './CustomerOrderDetails.view';
