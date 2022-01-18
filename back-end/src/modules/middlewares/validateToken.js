@@ -8,9 +8,13 @@ async function validateToken(req, res, next) {
     throw new AuthenticationError('A token is required');
   }
 
-  const { id, role } = decrypt(token);
-  res.locals.user = { id, role };
-  next();
+  try {
+    const { id, role } = decrypt(token);
+    res.locals.user = { id, role };
+    next();
+  } catch {
+    throw new AuthenticationError('Invalid token');
+  }
 }
 
 module.exports = validateToken;

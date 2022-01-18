@@ -88,7 +88,7 @@ describe('POST /sales', () => {
       .send(validSale)
       .expect(401)
       .then((res) => {
-        expect(res.body.error).toBe('A token is required');
+        expect(res.body.error.message).toBe('A token is required');
       }));
 
     it('when an invalid token is provided', () => request(server)
@@ -97,7 +97,7 @@ describe('POST /sales', () => {
       .send(validSale)
       .expect(401)
       .then((res) => {
-        expect(res.body.error).toBe('Invalid token');
+        expect(res.body.error.message).toBe('Invalid token');
       }));
   });
 
