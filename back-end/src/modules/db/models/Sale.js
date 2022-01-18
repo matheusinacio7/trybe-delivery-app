@@ -17,8 +17,6 @@ class Sale extends Model {
           quantity: product.quantity,
         }));
 
-        console.log(salesProducts);
-
         await SalesProductsModel.bulkCreate(salesProducts, { transaction });
 
         return { sale: sale.dataValues, products };
