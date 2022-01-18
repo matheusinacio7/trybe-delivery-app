@@ -36,7 +36,7 @@ class Sale extends Model {
   static async findOne({ query, includeProducts }) {
     const result = await SaleModel.findOne({ where: query });
 
-    const sale = result.dataValues;
+    const { sellerId, ...sale } = result.dataValues;
 
     if (!includeProducts) return sale;
 
@@ -57,9 +57,24 @@ class Sale extends Model {
       }
     );
 
-    sale.products = products;
+    const sellerQueryResult = await db.sequelize.query(
+      `
+      SELECT
+        name
+      FROM users
+      WHERE id = ?;
+      `,
+      {
+        type: QueryTypes.SELECT,
+        replacements: [sellerId],
+      },
+    );
 
-    return sale;
+    return {
+      ...sale,
+      products,
+      sellerName: sellerQueryResult[0].name,
+    };
   }
 }
 
