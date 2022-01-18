@@ -24,7 +24,7 @@ const customerGetSales = async ({ userId, searchByCustomer }) => {
   return Model.search({ userId });
 };
 
-const get = async ({ userId, userRole, searchByCustomer }) => {
+const getMany = async ({ userId, userRole, searchByCustomer }) => {
   const getFunctions = {
     customer: customerGetSales,
   };
@@ -37,5 +37,5 @@ const get = async ({ userId, userRole, searchByCustomer }) => {
 
 module.exports = {
   create,
-  get,
+  getMany,
 };
