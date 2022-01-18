@@ -13,6 +13,16 @@ module.exports = {
         sale_date: new Date(),
         status: 'Pendente',
       },
+      {
+        id: 2,
+        user_id: 4,
+        seller_id: 2,
+        total_price: '29.30',
+        delivery_address: 'Rua dos bobos',
+        delivery_number: '34',
+        sale_date: new Date(),
+        status: 'Pendente',
+      }
     ]);
   },
 
