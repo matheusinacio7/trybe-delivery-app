@@ -10,11 +10,12 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     name: DataTypes.STRING(100),
     price: DataTypes.DECIMAL(4, 2),
-    url_image: DataTypes.STRING(200),
+    urlImage: DataTypes.STRING(200),
   }, {
     sequelize,
     modelName: 'product',
     timestamps: false,
+    underscored: true,
   });
 
   return Product;

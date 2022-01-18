@@ -6,6 +6,7 @@ const { ValidationError } = require('../errors');
 
 const loginSchema = require('./schemas/user/session/login.schema.json');
 const registerSchema = require('./schemas/user/register.schema.json');
+const createSaleSchema = require('./schemas/sales/create.schema.json');
 
 const ajv = new Ajv({ allErrors: true });
 addFormats(ajv);
@@ -14,6 +15,7 @@ addErrors(ajv);
 const schemas = [
   [loginSchema, 'user_session_login'],
   [registerSchema, 'user_register'],
+  [createSaleSchema, 'sales_create'],
 ];
 
 schemas.forEach(([schema, name]) => {

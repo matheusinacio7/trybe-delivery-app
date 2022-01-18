@@ -7,10 +7,11 @@ const throwIfError = (result) => {
   return result;
 };
 
-export const post = ({ url, body }) => fetch(url, {
+export const post = ({ url, body, headers }) => fetch(url, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
+    ...headers,
   },
   body: JSON.stringify(body),
 })
