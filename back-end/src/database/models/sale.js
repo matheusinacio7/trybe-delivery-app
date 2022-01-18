@@ -1,7 +1,6 @@
 'use strict';
 
 const User = require('./user');
-const SalesProducts = require('./salesproducts');
 
 const {
   Model
@@ -36,9 +35,6 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     underscored: true,
   });
-
-  sequelize.models.product.belongsToMany(Sale, { through: 'salesProducts', as: 'products' });
-  Sale.belongsToMany(sequelize.models.product, { through: 'salesProducts' });
 
   return Sale;
 };

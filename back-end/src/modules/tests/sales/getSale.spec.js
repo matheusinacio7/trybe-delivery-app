@@ -28,12 +28,14 @@ describe('GET /sales/:id', () => {
       .set(...tokenHeader)
       .expect(403));
 
-    it.only('for a sale made by the customer, returns the sale with all products', () => request(server)
+    it('for a sale made by the customer, returns the sale with all products', () => request(server)
       .get(`${url}/${saleId}`)
       .set(...tokenHeader)
       .expect(200)
       .then((response) => {
-        console.log(response.body);
+        expect(response.body.sale.id).toBe(saleId);
+        expect(response.body.sale.userId).toBe(customerId);
+        expect(response.body.sale.products.length).toBe(1);
       }));
   });
 });

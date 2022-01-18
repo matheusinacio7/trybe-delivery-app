@@ -41,18 +41,13 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
     seller: 'sellerId',
   };
 
-  const salePointer = await Model.findOne({ id: saleId });
-  const sale = salePointer.dataValues;
+  const sale = await Model.findOne({ query: { id: saleId }, includeProducts: true });
 
   const attributeToCompare = attributesToCompare[userRole];
 
   if (sale[attributeToCompare] !== userId) {
     throw new ForbiddenError('Not allowed');
   }
-  
-  const productsPointer = await salePointer.getProducts();
-  const products = productsPointer.map(({ dataValues }) => dataValues);
-  console.log(products[0].salesProducts);
 
   return sale;
 };

@@ -1,6 +1,6 @@
 const { Sale } = require('../db').models;
 
-const findOne = (query) => Sale.findOne(query);
+const findOne = ({ query, includeProducts }) => Sale.findOne({ query, includeProducts });
 const create = (saleData) => Sale.create(saleData);
 const search = (query) => Sale.search(query);
 
