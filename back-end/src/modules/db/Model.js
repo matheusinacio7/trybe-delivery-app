@@ -13,6 +13,11 @@ class Model {
     return this.Model.findAll()
       .then((result) => result.map(extractDataValues));
   }
+
+  static search(query) {
+    return this.Model.findAll({ where: query })
+      .then((result) => result.map(extractDataValues));
+  }
 }
 
 module.exports = Model;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../api/user';
@@ -11,6 +11,13 @@ export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const user = localStorage.get('user');
+    if (user) {
+      navigate('/');
+    }
+  }, []);
+
   return (
     <main>
       <Heading level={ 1 }>Delivery App!</Heading>
@@ -19,8 +26,9 @@ export default function Login() {
         initialValues={ { email: '', password: '' } }
         onSubmit={ (credentials) => {
           login(credentials)
-            .then((response) => {
-              localStorage.save({ key: 'user', data: response });
+            .then(({ id, ...otherData }) => {
+              localStorage.save({ key: 'user', data: otherData });
+              localStorage.save({ key: 'userId', data: id });
               navigate('/customer/products', { replace: true });
             })
             .catch((err) => {

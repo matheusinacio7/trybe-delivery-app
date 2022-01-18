@@ -1,5 +1,6 @@
 const Model = require('./sales.model');
 
+const { ForbiddenError } = require('../errors');
 const { validate } = require('../validation');
 
 const create = async (saleData) => {
@@ -15,6 +16,26 @@ const create = async (saleData) => {
   return { ...sale, products };
 };
 
+const customerGetSales = async ({ userId, searchByCustomer }) => {
+  if (!searchByCustomer) throw new ForbiddenError('Not allowed.');
+
+  if (userId !== searchByCustomer) throw new ForbiddenError('Not allowed.');
+
+  return Model.search({ userId });
+};
+
+const get = async ({ userId, userRole, searchByCustomer }) => {
+  const getFunctions = {
+    customer: customerGetSales,
+  };
+
+  return getFunctions[userRole]({
+    userId,
+    searchByCustomer: searchByCustomer ? Number(searchByCustomer) : null,
+  });
+};
+
 module.exports = {
   create,
+  get,
 };
