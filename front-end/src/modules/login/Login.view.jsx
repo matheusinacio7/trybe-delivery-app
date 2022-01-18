@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { login } from '../api/user';
@@ -10,6 +10,13 @@ import * as localStorage from '../localStorage';
 export default function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = localStorage.get('user');
+    if (user) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <main>
