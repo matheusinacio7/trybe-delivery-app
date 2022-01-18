@@ -19,8 +19,9 @@ export default function Login() {
         initialValues={ { email: '', password: '' } }
         onSubmit={ (credentials) => {
           login(credentials)
-            .then((response) => {
-              localStorage.save({ key: 'user', data: response });
+            .then(({ id, ...otherData }) => {
+              localStorage.save({ key: 'user', data: otherData });
+              localStorage.save({ key: 'userId', data: id });
               navigate('/customer/products', { replace: true });
             })
             .catch((err) => {
