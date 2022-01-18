@@ -23,18 +23,18 @@ describe('GET /sales', () => {
       tokenHeader = ['Authorization', token];
     });
 
-    it('without search params, throws a forbidden error', () => request(url)
+    it('without search params, throws a forbidden error', () => request(server)
       .get(url)
       .set(...tokenHeader)
       .expect(403));
 
-    it('with search params for a different customer, throws forbidden error', () => request(url)
+    it('with search params for a different customer, throws forbidden error', () => request(server)
       .get(url)
       .query({ customer: 2 })
       .set(...tokenHeader)
       .expect(403));
 
-    it('with matching search params, returns a list of sales', () => request(url)
+    it('with matching search params, returns a list of sales', () => request(server)
       .get(url)
       .query({ customer: customerId })
       .set(...tokenHeader)
