@@ -4,4 +4,4 @@ module.exports = function getToken() {
   const thirdPart = 'BMil2LrIuBLFyUWIy5n_SgdfA_etlFZCcQ77BRWCtdE';
 
   return `${firstPart}.${secondPart}.${thirdPart}`;
-}
+};

@@ -5,6 +5,8 @@ const server = require('../../server');
 
 const { getToken, resetDb } = require('../helpers');
 
+const token = getToken();
+
 describe('POST /sales', () => {
   beforeEach(function () {
     resetDb();
@@ -12,7 +14,7 @@ describe('POST /sales', () => {
 
   const url = '/sales';
 
-  const tokenHeader = ['Authorization', getToken()];
+  const tokenHeader = ['Authorization', token];
 
   const saleWithInvalidProductQuantity = {
     sellerId: 2,
@@ -100,7 +102,6 @@ describe('POST /sales', () => {
         expect(res.body.error.message).toBe('Invalid token');
       }));
   });
-
 
   describe('returns a validation error with invalid', () => {
     it('product quantity', () => request(server)

@@ -12,7 +12,7 @@ async function validateToken(req, res, next) {
     const { id, role } = decrypt(token);
     res.locals.user = { id, role };
     next();
-  } catch {
+  } catch (_err) {
     throw new AuthenticationError('Invalid token');
   }
 }

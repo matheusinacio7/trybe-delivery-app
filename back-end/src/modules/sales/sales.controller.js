@@ -13,7 +13,7 @@ const create = async (saleData) => {
 
   const { sale, products } = await Model.create(newSale);
   return { ...sale, products };
-}
+};
 
 module.exports = {
   create,
