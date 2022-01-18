@@ -16,8 +16,6 @@ describe('GET /sales', () => {
 
   describe('for a CUSTOMER', () => {
     const customerId = 3;
-    const validSearchParam = `customer=${customerId}`;
-    const invalidSearchParam = 'customer=2';
     let tokenHeader;
 
     beforeAll(function () {
@@ -31,12 +29,14 @@ describe('GET /sales', () => {
       .expect(403));
 
     it('with search params for a different customer, throws forbidden error', () => request(url)
-      .get(`${url}?${invalidSearchParam}`)
+      .get(url)
+      .query({ customer: 2 })
       .set(...tokenHeader)
       .expect(403));
 
     it('with matching search params, returns a list of sales', () => request(url)
-      .get(`${url}?${validSearchParam}`)
+      .get(url)
+      .query({ customer: customerId })
       .set(...tokenHeader)
       .expect(200)
       .then((response) => {
