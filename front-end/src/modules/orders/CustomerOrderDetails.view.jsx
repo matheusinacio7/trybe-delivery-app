@@ -102,7 +102,7 @@ export default function CustomerOrderDetails() {
               <p data-testid={ testIds.orderStatus }>
                 { result.sale.status }
               </p>
-              <Button testId={ testIds.markAsDelivered }>
+              <Button disabled testId={ testIds.markAsDelivered }>
                 Marcar como entregue
               </Button>
             </section>
