@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Layout from '../layout';
 
+import { Button } from '../buttons';
+
 import * as localStorage from '../localStorage';
 import * as salesApi from '../api/sales';
 
@@ -24,42 +26,46 @@ export default function CustomerOrders() {
   return (
     <Layout context="customer">
       <main>
-        <ol>
+        <ul>
           {
             orders.map(({ id, saleDate, totalPrice, status }) => (
               <li key={ id }>
-                <section>
-                  <div>Pedido</div>
-                  <div
-                    data-testid={ `customer_orders__element-order-id-${id}` }
-                  >
-                    { id }
-                  </div>
-                </section>
-                <section
-                  data-testid={ `customer_orders__element-delivery-status-${id}` }
+                <Button
+                  navigateTo={ `/customer/orders/${id}` }
                 >
-                  { status }
-                </section>
-                <section>
-                  <div
-                    data-testid={ `customer_orders__element-order-date-${id}` }
-                  >
-                    { new Date(saleDate).toLocaleDateString('pt-BR') }
-                  </div>
-                  <div>
-                    <span>R$ </span>
-                    <span
-                      data-testid={ `customer_orders__element-card-price-${id}` }
+                  <section>
+                    <div>Pedido</div>
+                    <div
+                      data-testid={ `customer_orders__element-order-id-${id}` }
                     >
-                      { totalPrice.replace('.', ',') }
-                    </span>
-                  </div>
-                </section>
+                      { id }
+                    </div>
+                  </section>
+                  <section
+                    data-testid={ `customer_orders__element-delivery-status-${id}` }
+                  >
+                    { status }
+                  </section>
+                  <section>
+                    <div
+                      data-testid={ `customer_orders__element-order-date-${id}` }
+                    >
+                      { new Date(saleDate).toLocaleDateString('pt-BR') }
+                    </div>
+                    <div>
+                      <span>R$ </span>
+                      <span
+                        data-testid={ `customer_orders__element-card-price-${id}` }
+                      >
+                        { totalPrice.replace('.', ',') }
+                      </span>
+                    </div>
+                  </section>
+                </Button>
               </li>
             ))
           }
-        </ol>
+        </ul>
       </main>
     </Layout>
   );
