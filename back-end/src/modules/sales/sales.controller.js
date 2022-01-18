@@ -35,7 +35,30 @@ const getMany = async ({ userId, userRole, searchByCustomer }) => {
   });
 };
 
+const getDetailed = async ({ userId, userRole, saleId }) => {
+  const attributesToCompare = {
+    customer: 'userId',
+    seller: 'sellerId',
+  };
+
+  const salePointer = await Model.findOne({ id: saleId });
+  const sale = salePointer.dataValues;
+
+  const attributeToCompare = attributesToCompare[userRole];
+
+  if (sale[attributeToCompare] !== userId) {
+    throw new ForbiddenError('Not allowed');
+  }
+  
+  const productsPointer = await salePointer.getProducts();
+  const products = productsPointer.map(({ dataValues }) => dataValues);
+  console.log(products[0].salesProducts);
+
+  return sale;
+};
+
 module.exports = {
   create,
   getMany,
+  getDetailed,
 };

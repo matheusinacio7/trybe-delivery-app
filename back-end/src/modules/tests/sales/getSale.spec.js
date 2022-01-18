@@ -28,12 +28,12 @@ describe('GET /sales/:id', () => {
       .set(...tokenHeader)
       .expect(403));
 
-    it('for a sale made by the customer, returns the sale with all products', () => request(server)
+    it.only('for a sale made by the customer, returns the sale with all products', () => request(server)
       .get(`${url}/${saleId}`)
       .set(...tokenHeader)
       .expect(200)
       .then((response) => {
-        console.log(response);
+        console.log(response.body);
       }));
   });
 });

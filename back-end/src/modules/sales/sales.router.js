@@ -5,6 +5,7 @@ const { validateToken } = require('../middlewares');
 
 router.get('/:id', validateToken, async (req, res) => {
   const sale = await Controller.getDetailed({
+    userId: res.locals.user.id,
     userRole: res.locals.user.role,
     saleId: req.params.id,
   });
