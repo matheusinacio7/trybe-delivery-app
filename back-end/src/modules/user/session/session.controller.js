@@ -25,6 +25,7 @@ const create = async (userData) => {
     name: user.name,
     email: user.email,
     role: user.role,
+    id: user.id,
     token,
   };
 };
