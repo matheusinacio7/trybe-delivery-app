@@ -4,9 +4,9 @@ import { Button } from '../buttons';
 import { Field, Form, FormProvider } from '../forms';
 
 import { useShoppingCart } from '../shoppingCart';
-// import { get } from '../localStorage';
+import * as localStorage from '../localStorage';
 
-// import * as salesApi from '../api/sales';
+import * as salesApi from '../api/sales';
 
 export default function CheckoutForm() {
   const { cartState, total } = useShoppingCart();
@@ -17,10 +17,18 @@ export default function CheckoutForm() {
       schema="checkout"
       initialErrors={ { seller: 'Invalid seller' } }
       onSubmit={ ({ seller, address, number }) => {
-        console.log({ seller, address, number, cartState, total });
-        // salesApi.create({
-        //   userId: get('userId'),
-        // })
+        // console.log({ seller, address, number, cartState, total });
+        const { token } = localStorage.get('user');
+
+        salesApi.create({
+          deliveryAddress: address,
+          deliveryNumber: number,
+          products: cartState,
+          sellerId: seller,
+          token,
+          totalPrice: total,
+        }).then(console.log)
+          .catch(console.log);
       } }
       validateOnChange
     >

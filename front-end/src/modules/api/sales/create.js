@@ -1,23 +1,22 @@
-import { post } from '../../http';
-import { config } from '../common';
+import { authenticatedPost, config } from '../common';
 
 export default function createSale({
-  userId,
+  token,
   sellerId,
   totalPrice,
   deliveryAddress,
   deliveryNumber,
   products,
 }) {
-  return post({
+  return authenticatedPost({
     url: `${config.baseUrl}/sales`,
     body: {
-      userId,
       sellerId,
       totalPrice,
       deliveryAddress,
       deliveryNumber,
       products,
     },
+    token,
   });
 }
