@@ -22,6 +22,7 @@ const testIds = {
   productQuantity: 'customer_order_details__element-order-table-quantity',
   productPrice: 'customer_order_details__element-order-table-unit-price',
   productTotal: 'customer_order_details__element-order-table-sub-total',
+  saleTotal: 'customer_order_details__element-order-total-price',
 };
 
 export default function CustomerOrderDetails() {
@@ -110,6 +111,12 @@ export default function CustomerOrderDetails() {
                 { renderTableHead() }
                 { renderTableBody(result.sale) }
               </table>
+              <p>
+                <span>Total: R$ </span>
+                <span data-testid={ testIds.saleTotal }>
+                  { result.sale.totalPrice.replace('.', ',') }
+                </span>
+              </p>
             </section>
           </>
         ) }
