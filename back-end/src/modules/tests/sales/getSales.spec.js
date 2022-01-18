@@ -8,7 +8,7 @@ const { resetDb } = require('../helpers');
 const { sign } = require('../../token');
 
 describe('GET /sales', () => {
-  beforeEach(function() {
+  beforeEach(function () {
     resetDb();
   });
 
