@@ -78,6 +78,7 @@ class Sale extends Model {
       ...sale,
       products,
       sellerName: sellerQueryResult[0].name,
+      sellerId,
     };
   }
 }

@@ -5,7 +5,12 @@ import Checkout from '../checkout';
 import Home from '../home';
 import Login from '../login';
 import Logout from '../logout';
-import { CustomerOrderDetails, CustomerOrders, SellerOrders } from '../orders';
+import {
+  CustomerOrderDetails,
+  CustomerOrders,
+  SellerOrderDetails,
+  SellerOrders,
+} from '../orders';
 import { Products } from '../products';
 import Register from '../register';
 
@@ -20,7 +25,7 @@ export default function Routes() {
       <Route path="/customer/logout" element={ <Logout /> } />
       <Route path="/customer/orders/:orderId" element={ <CustomerOrderDetails /> } />
       <Route path="/customer/orders" element={ <CustomerOrders /> } />
-      <Route path="/seller/orders/:orderId" element={ <main>Opa!</main> } />
+      <Route path="/seller/orders/:orderId" element={ <SellerOrderDetails /> } />
       <Route path="/seller/orders" element={ <SellerOrders /> } />
       <Route path="/seller/logout" element={ <Logout /> } />
     </ReactRouterRoutes>
