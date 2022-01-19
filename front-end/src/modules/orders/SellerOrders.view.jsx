@@ -19,6 +19,7 @@ export default function SellerOrders() {
     })
       .then(({ sales }) => {
         setOrders(sales);
+        console.log(orders);
       })
       .catch(console.error);
   }, []);
@@ -28,37 +29,51 @@ export default function SellerOrders() {
       <main>
         <ul>
           {
-            orders.map(({ id, saleDate, totalPrice, status }) => (
+            orders.map(({
+              id,
+              saleDate,
+              totalPrice,
+              status,
+              deliveryAddress,
+              deliveryNumber,
+            }) => (
               <li key={ id }>
                 <Button
-                  navigateTo={ `/customer/orders/${id}` }
+                  navigateTo={ `/seller/orders/${id}` }
                 >
                   <section>
                     <div>Pedido</div>
                     <div
-                      data-testid={ `customer_orders__element-order-id-${id}` }
+                      data-testid={ `seller_orders__element-order-id-${id}` }
                     >
                       { id }
                     </div>
                   </section>
                   <section
-                    data-testid={ `customer_orders__element-delivery-status-${id}` }
+                    data-testid={ `seller_orders__element-delivery-status-${id}` }
                   >
                     { status }
                   </section>
                   <section>
                     <div
-                      data-testid={ `customer_orders__element-order-date-${id}` }
+                      data-testid={ `seller_orders__element-order-date-${id}` }
                     >
                       { new Date(saleDate).toLocaleDateString('pt-BR') }
                     </div>
                     <div>
                       <span>R$ </span>
                       <span
-                        data-testid={ `customer_orders__element-card-price-${id}` }
+                        data-testid={ `seller_orders__element-card-price-${id}` }
                       >
                         { totalPrice.replace('.', ',') }
                       </span>
+                    </div>
+                  </section>
+                  <section>
+                    <div
+                      data-testid={ `seller_orders__element-card-address-${id}` }
+                    >
+                      { `${deliveryAddress}, ${deliveryNumber}` }
                     </div>
                   </section>
                 </Button>
