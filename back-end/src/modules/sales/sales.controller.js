@@ -3,6 +3,8 @@ const Model = require('./sales.model');
 const { ForbiddenError } = require('../errors');
 const { validate } = require('../validation');
 
+const NOT_ALLOWED_ERROR_MESSAGE = 'Not allowed.';
+
 const create = async (saleData) => {
   await validate({ schema: 'sales_create', data: saleData });
 
@@ -17,20 +19,20 @@ const create = async (saleData) => {
 };
 
 const customerGetSales = async ({ userId, searchByCustomer }) => {
-  if (!searchByCustomer) throw new ForbiddenError('Not allowed.');
+  if (!searchByCustomer) throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
 
-  if (userId !== searchByCustomer) throw new ForbiddenError('Not allowed.');
+  if (userId !== searchByCustomer) throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
 
   return Model.search({ userId });
 };
 
 const sellerGetSales = async ({ userId, searchBySeller }) => {
-  if (!searchBySeller) throw new ForbiddenError('Not allowed.');
+  if (!searchBySeller) throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
 
-  if (userId !== searchBySeller) throw new ForbiddenError('Not allowed.');
+  if (userId !== searchBySeller) throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
 
   return Model.search({ sellerId: userId });
-}
+};
 
 const getMany = async ({ userId, userRole, searchByCustomer, searchBySeller }) => {
   const getFunctions = {

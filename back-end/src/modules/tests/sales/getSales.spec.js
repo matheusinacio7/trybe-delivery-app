@@ -45,7 +45,7 @@ describe('GET /sales', () => {
       }));
   });
 
-  describe.only('for a SELLER', () => {
+  describe('for a SELLER', () => {
     const sellerId = 2;
     let tokenHeader;
 
@@ -54,9 +54,9 @@ describe('GET /sales', () => {
       tokenHeader = ['Authorization', token];
     });
 
-    it('without search params, throws a forbidden error', () => request(server)
+    it('without search query, throws a forbidden error', () => request(server)
       .get(url)
-      .set(...tokenHeader)
+      .set(tokenHeader[0], tokenHeader[1])
       .expect(403));
 
     it('with search params for a different seller, throws forbidden error', () => request(server)
