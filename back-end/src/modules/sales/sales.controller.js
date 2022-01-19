@@ -24,14 +24,24 @@ const customerGetSales = async ({ userId, searchByCustomer }) => {
   return Model.search({ userId });
 };
 
-const getMany = async ({ userId, userRole, searchByCustomer }) => {
+const sellerGetSales = async ({ userId, searchBySeller }) => {
+  if (!searchBySeller) throw new ForbiddenError('Not allowed.');
+
+  if (userId !== searchBySeller) throw new ForbiddenError('Not allowed.');
+
+  return Model.search({ sellerId: userId });
+}
+
+const getMany = async ({ userId, userRole, searchByCustomer, searchBySeller }) => {
   const getFunctions = {
     customer: customerGetSales,
+    seller: sellerGetSales,
   };
 
   return getFunctions[userRole]({
     userId,
     searchByCustomer: searchByCustomer ? Number(searchByCustomer) : null,
+    searchBySeller: searchBySeller ? Number(searchBySeller) : null,
   });
 };
 

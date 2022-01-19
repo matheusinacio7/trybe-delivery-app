@@ -18,6 +18,7 @@ router.get('/', validateToken, async (req, res) => {
     userId: res.locals.user.id,
     userRole: res.locals.user.role,
     searchByCustomer: req.query.customer,
+    searchBySeller: req.query.seller,
   });
 
   res.status(200).json({ sales });

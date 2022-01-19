@@ -1,3 +1,2 @@
-const disableThisRulePls = null;
 export { default as CustomerNavbar } from './CustomerNavbar.view';
-export { disableThisRulePls };
+export { default as SellerNavbar } from './SellerNavbar.view';

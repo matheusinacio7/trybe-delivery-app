@@ -29,7 +29,7 @@ export default function Login() {
             .then(({ id, ...otherData }) => {
               localStorage.save({ key: 'user', data: otherData });
               localStorage.save({ key: 'userId', data: id });
-              navigate('/customer/products', { replace: true });
+              navigate('/', { replace: true });
             })
             .catch((err) => {
               setError(err);

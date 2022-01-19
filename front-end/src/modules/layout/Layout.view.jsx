@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CustomerNavbar } from './navbars';
+import { CustomerNavbar, SellerNavbar } from './navbars';
 
 const NavBars = {
   customer: CustomerNavbar,
+  seller: SellerNavbar,
 };
 
 export default function Layout({
