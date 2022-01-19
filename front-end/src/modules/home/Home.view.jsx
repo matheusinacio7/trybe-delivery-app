@@ -6,6 +6,7 @@ import * as localStorage from '../localStorage';
 
 const homePages = {
   customer: '/customer/products',
+  seller: '/seller/orders',
   visitor: '/login',
 };
 
@@ -16,6 +17,8 @@ export default function Home() {
     const user = localStorage.get('user');
 
     const role = user ? user.role : 'visitor';
+
+    console.log(role);
 
     const homePage = homePages[role];
 
