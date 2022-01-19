@@ -19,8 +19,8 @@ class Model {
       .then((result) => result.map(extractDataValues));
   }
 
-  static update({ id, update }) {
-    return this.Model.update(update, { where: { id } });
+  static update({ id, newValues }) {
+    return this.Model.update(newValues, { where: { id } });
   }
 }
 

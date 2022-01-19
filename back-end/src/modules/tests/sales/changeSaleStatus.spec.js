@@ -1,4 +1,3 @@
-
 const { describe, it } = require('@jest/globals');
 const request = require('supertest');
 
@@ -7,6 +6,19 @@ const server = require('../../server');
 const { resetDb } = require('../helpers');
 
 const { sign } = require('../../token');
+
+const descriptionsThanksLint = {
+  invalidCurrentStatus: null,
+  correct: null,
+};
+
+descriptionsThanksLint.invalidCurrentStatus = 'for a sale made by the customer, ';
+descriptionsThanksLint.invalidCurrentStatus += 'with the correct status update, '; 
+descriptionsThanksLint.invalidCurrentStatus += 'but invalid current status, ';
+descriptionsThanksLint.invalidCurrentStatus += 'returns a forbidden error';
+
+descriptionsThanksLint.correct = 'for a sale made by the customer, ';
+descriptionsThanksLint.correct += 'with the correct status update, returns a success message';
 
 describe('PUT /sales', () => {
   beforeEach(function () {
@@ -21,7 +33,7 @@ describe('PUT /sales', () => {
 
     const validSaleId = 4;
     const saleIdNotMadeByTheCustomer = 2;
-    const saleIdsWithInvalidCurrentStatuses = [1, 3, 5];
+    const saleIdsInvalidStatuses = [1, 3, 5];
 
     const validStatusUpdate = {
       status: 'Entregue',
@@ -37,9 +49,6 @@ describe('PUT /sales', () => {
       {
         status: 'Em Trânsito',
       },
-      {
-        status: '',
-      },
     ];
 
     beforeAll(function () {
@@ -53,19 +62,27 @@ describe('PUT /sales', () => {
       .send(validStatusUpdate)
       .expect(403));
 
-    it('for invalid status updates, returns a forbidden error', () => invalidStatusUpdates.forEach((invalidStatusUpdate) => request(server)
-      .put(`${url}/${validSaleId}`)
-      .set(...tokenHeader)
-      .send(invalidStatusUpdate)
-      .expect(403)));
+    it('for invalid status updates, returns a forbidden error', () => {
+      const invalidStatusTests = invalidStatusUpdates.map((invalidStatusUpdate) => request(server)
+        .put(`${url}/${validSaleId}`)
+        .set(...tokenHeader)
+        .send(invalidStatusUpdate)
+        .expect(403));
 
-    it('for a sale made by the customer, with the correct status update, but invalid current status, returns a forbidden error', () => saleIdsWithInvalidCurrentStatuses.forEach((saleIdWithInvalidCurrentStatus) => request(server)
-      .put(`${url}/${saleIdWithInvalidCurrentStatus}`)
-      .set(...tokenHeader)
-      .send(validStatusUpdate)
-      .expect(403)));
+      return Promise.all(invalidStatusTests);
+    });
 
-    it.only('for a sale made by the customer, with the correct status update, returns a success message', () => request(server)
+    it.only(descriptionsThanksLint.invalidCurrentStatus, () => {
+      const promises = saleIdsInvalidStatuses.map((saleId) => request(server)
+        .put(`${url}/${saleId}`)
+        .set(...tokenHeader)
+        .send(validStatusUpdate)
+        .expect(403));
+
+      return Promise.all(promises);
+    });
+
+    it(descriptionsThanksLint.correct, () => request(server)
       .put(`${url}/${validSaleId}`)
       .set(...tokenHeader)
       .send(validStatusUpdate)

@@ -58,7 +58,7 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
   const attributeToCompare = attributesToCompare[userRole];
 
   if (sale[attributeToCompare] !== userId) {
-    throw new ForbiddenError('Not allowed');
+    throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
   }
 
   delete sale.sellerId;
@@ -66,7 +66,7 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
   return sale;
 };
 
-const updateStatus = async ({ userRole, sale, newValues }) => {
+const validateStatusUpdate = async ({ userRole, sale, newValues }) => {
   const reverseStatusDictionary = {
     Preparando: 'Pendente',
     'Em Trânsito': 'Preparando',
@@ -80,18 +80,23 @@ const updateStatus = async ({ userRole, sale, newValues }) => {
 
   await validate({ schema: 'sales_update_status', data: newValues });
 
-
   if (!allowedUpdatesByRole[userRole].includes(newValues.status)) {
-    throw new ForbiddenError('Not allowed');
+    throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
   }
 
   if (reverseStatusDictionary[newValues.status] !== sale.status) {
-    throw new ForbiddenError('Not allowed');
+    throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
   }
+
+  return true;
+};
+
+const updateStatus = async ({ userRole, sale, newValues }) => {
+  await validateStatusUpdate({ userRole, sale, newValues });
 
   const [updatedSaleCount] = await Model.update({
     id: sale.id,
-    update: { status: newValues.status },
+    newValues: { status: newValues.status },
   });
 
   if (updatedSaleCount !== 1) {
@@ -123,13 +128,13 @@ const update = async ({ userId, userRole, saleId, newValues }) => {
   const attributeToCompare = attributesToCompare[userRole];
 
   if (sale[attributeToCompare] !== userId) {
-    throw new ForbiddenError('Not allowed');
+    throw new ForbiddenError(NOT_ALLOWED_ERROR_MESSAGE);
   }
 
   const { message, updateReport } = await updateFunctions[userRole]({ userRole, sale, newValues });
 
   return { message, updateReport };
-}
+};
 
 module.exports = {
   create,
