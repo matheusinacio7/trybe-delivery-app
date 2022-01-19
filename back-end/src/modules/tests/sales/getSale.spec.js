@@ -40,7 +40,7 @@ describe('GET /sales/:id', () => {
       }));
   });
 
-  describe.only('for a SELLER', () => {
+  describe('for a SELLER', () => {
     const sellerId = 2;
     const saleId = 1;
     let tokenHeader;
@@ -61,7 +61,7 @@ describe('GET /sales/:id', () => {
       .expect(200)
       .then((response) => {
         expect(response.body.sale.id).toBe(saleId);
-        expect(response.body.sale.sellerId).toBe(sellerId);
+        expect(response.body.sale.sellerName).toBe('Fulana Pereira');
         expect(response.body.sale.products.length).toBe(1);
       }));
   });
