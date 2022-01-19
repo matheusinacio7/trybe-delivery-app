@@ -8,17 +8,23 @@ const { resetDb } = require('../helpers');
 const { sign } = require('../../token');
 
 const descriptionsThanksLint = {
-  invalidCurrentStatus: null,
-  correct: null,
+  customerStatus: null,
+  customerCorrect: null,
+  sellerCorrect: null,
 };
 
-descriptionsThanksLint.invalidCurrentStatus = 'for a sale made by the customer, ';
-descriptionsThanksLint.invalidCurrentStatus += 'with the correct status update, '; 
-descriptionsThanksLint.invalidCurrentStatus += 'but invalid current status, ';
-descriptionsThanksLint.invalidCurrentStatus += 'returns a forbidden error';
+descriptionsThanksLint.customerStatus = 'for a sale made by the customer, ';
+descriptionsThanksLint.customerStatus += 'with the correct status update, '; 
+descriptionsThanksLint.customerStatus += 'but invalid current status, ';
+descriptionsThanksLint.customerStatus += 'returns a forbidden error';
 
-descriptionsThanksLint.correct = 'for a sale made by the customer, ';
-descriptionsThanksLint.correct += 'with the correct status update, returns a success message';
+descriptionsThanksLint.customerCorrect = 'for a sale made by the customer, ';
+descriptionsThanksLint.customerCorrect += 'with the correct status update, returns a scs message';
+
+descriptionsThanksLint.sellerCorrect = 'for a sale made by the seller, ';
+descriptionsThanksLint.sellerCorrect += 'with the correct status update, returns a success message';
+
+const EN_ROUTE_STATUS = 'Em Trânsito';
 
 describe('PUT /sales', () => {
   beforeEach(function () {
@@ -47,7 +53,7 @@ describe('PUT /sales', () => {
         status: 'Preparando',
       },
       {
-        status: 'Em Trânsito',
+        status: EN_ROUTE_STATUS,
       },
     ];
 
@@ -72,7 +78,7 @@ describe('PUT /sales', () => {
       return Promise.all(invalidStatusTests);
     });
 
-    it.only(descriptionsThanksLint.invalidCurrentStatus, () => {
+    it(descriptionsThanksLint.customerStatus, () => {
       const promises = saleIdsInvalidStatuses.map((saleId) => request(server)
         .put(`${url}/${saleId}`)
         .set(...tokenHeader)
@@ -82,7 +88,7 @@ describe('PUT /sales', () => {
       return Promise.all(promises);
     });
 
-    it(descriptionsThanksLint.correct, () => request(server)
+    it(descriptionsThanksLint.customerCorrect, () => request(server)
       .put(`${url}/${validSaleId}`)
       .set(...tokenHeader)
       .send(validStatusUpdate)
@@ -90,5 +96,79 @@ describe('PUT /sales', () => {
       .expect((response) => {
         expect(response.body).toHaveProperty('message');
       }));
+  });
+
+  describe('for a SELLER', () => {
+    const sellerId = 2;
+    let tokenHeader;
+
+    const saleIdNotMadeByTheSeller = 3;
+
+    const validStatusUpdates = [
+      {
+        update: {
+          status: 'Preparando',
+        },
+        saleId: 1,
+      },
+      {
+        update: {
+          status: EN_ROUTE_STATUS,
+        },
+        saleId: 6,
+      },
+    ];
+
+    const invalidStatusUpdates = [
+      {
+        update: {
+          status: 'Pendente',
+        },
+        saleId: 1,
+      },
+      {
+        update: {
+          status: 'Entregue',
+        },
+        saleId: 6,
+      },
+      {
+        update: {
+          status: EN_ROUTE_STATUS,
+        },
+        saleId: 4,
+      },
+    ];
+
+    beforeAll(function () {
+      const token = sign({ id: sellerId, role: 'seller' });
+      tokenHeader = ['Authorization', token];
+    });
+
+    it('for a sale not made by the seller, returns a forbidden error', () => request(server)
+      .put(`${url}/${saleIdNotMadeByTheSeller}`)
+      .set(...tokenHeader)
+      .send(validStatusUpdates[0].update)
+      .expect(403));
+
+    it('for invalid status updates, returns a forbidden error', () => {
+      const invalidStatusTests = invalidStatusUpdates.map((invalidStatusUpdate) => request(server)
+        .put(`${url}/${invalidStatusUpdate.saleId}`)
+        .set(...tokenHeader)
+        .send(invalidStatusUpdate.update)
+        .expect(403));
+
+      return Promise.all(invalidStatusTests);
+    });
+
+    it(descriptionsThanksLint.sellerCorrect, () => {
+      const promises = validStatusUpdates.map((validStatusUpdate) => request(server)
+        .put(`${url}/${validStatusUpdate.saleId}`)
+        .set(...tokenHeader)
+        .send(validStatusUpdate.update)
+        .expect(200));
+
+      return Promise.all(promises);
+    });
   });
 });

@@ -46,12 +46,22 @@ module.exports = {
       {
         id: 5,
         user_id: 1,
-        seller_id: 3,
+        seller_id: 2,
         total_price: '29.30',
         delivery_address: 'Rua dos bobos',
         delivery_number: '1',
         sale_date: new Date(),
         status: 'Entregue',
+      },
+      {
+        id: 6,
+        user_id: 1,
+        seller_id: 2,
+        total_price: '99.90',
+        delivery_address: 'Rua dos bobos',
+        delivery_number: '1',
+        sale_date: new Date(),
+        status: 'Preparando',
       },
     ]);
   },
