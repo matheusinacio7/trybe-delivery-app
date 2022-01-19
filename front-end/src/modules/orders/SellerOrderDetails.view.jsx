@@ -12,17 +12,18 @@ import * as localStorage from '../localStorage';
 const ORDER_NUMBER_SIZE = 4;
 
 const testIds = {
-  orderNumber: 'customer_order_details__element-order-details-label-order-id',
-  sellerName: 'customer_order_details__element-order-details-label-seller-name',
-  orderDate: 'customer_order_details__element-order-details-label-order-date',
-  orderStatus: 'customer_order_details__element-order-details-label-delivery-status',
-  markAsDelivered: 'customer_order_details__button-delivery-check',
-  productNumber: 'customer_order_details__element-order-table-item-number',
-  productName: 'customer_order_details__element-order-table-name',
-  productQuantity: 'customer_order_details__element-order-table-quantity',
-  productPrice: 'customer_order_details__element-order-table-unit-price',
-  productTotal: 'customer_order_details__element-order-table-sub-total',
-  saleTotal: 'customer_order_details__element-order-total-price',
+  orderNumber: 'seller_order_details__element-order-details-label-order-id',
+  sellerName: 'seller_order_details__element-order-details-label-seller-name',
+  orderDate: 'seller_order_details__element-order-details-label-order-date',
+  orderStatus: 'seller_order_details__element-order-details-label-delivery-status',
+  markAsBeingPrepared: 'seller_order_details__button-preparing-check',
+  markAsEnRoute: 'seller_order_details__button-dispatch-check',
+  productNumber: 'seller_order_details__element-order-table-item-number',
+  productName: 'seller_order_details__element-order-table-name',
+  productQuantity: 'seller_order_details__element-order-table-quantity',
+  productPrice: 'seller_order_details__element-order-table-unit-price',
+  productTotal: 'seller_order_details__element-order-table-sub-total',
+  saleTotal: 'seller_order_details__element-order-total-price',
 };
 
 export default function CustomerOrderDetails() {
@@ -102,8 +103,11 @@ export default function CustomerOrderDetails() {
               <p data-testid={ testIds.orderStatus }>
                 { result.sale.status }
               </p>
-              <Button disabled testId={ testIds.markAsDelivered }>
-                Marcar como entregue
+              <Button testId={ testIds.markAsBeingPrepared }>
+                Marcar como preparando
+              </Button>
+              <Button disabled testId={ testIds.markAsEnRoute }>
+                Marcar como enviado
               </Button>
             </section>
             <section>
