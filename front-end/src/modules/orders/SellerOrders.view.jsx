@@ -13,8 +13,8 @@ export default function SellerOrders() {
   useEffect(() => {
     const { token } = localStorage.get('user');
     const id = localStorage.get('userId');
-    salesApi.getByCustomer({
-      customerId: id,
+    salesApi.getBySeller({
+      sellerId: id,
       token,
     })
       .then(({ sales }) => {
