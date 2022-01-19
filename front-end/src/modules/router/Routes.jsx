@@ -21,6 +21,7 @@ export default function Routes() {
       <Route path="/customer/orders/:orderId" element={ <CustomerOrderDetails /> } />
       <Route path="/customer/orders" element={ <CustomerOrders /> } />
       <Route path="/seller/orders" element={ <SellerOrders /> } />
+      <Route path="/seller/logout" element={ <Logout /> } />
     </ReactRouterRoutes>
   );
 }

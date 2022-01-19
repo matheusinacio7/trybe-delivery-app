@@ -9,7 +9,7 @@ export default function SellerNavbar() {
       <div>
         <Link
           data-testid="customer_products__element-navbar-link-orders"
-          to="/customer/orders"
+          to="/seller/orders"
         >
           Minhas vendas
         </Link>
@@ -17,13 +17,13 @@ export default function SellerNavbar() {
       <div>
         <Link
           data-testid="customer_products__element-navbar-user-full-name"
-          to="/customer/profile"
+          to="/seller/profile"
         >
           { localStorage.get('user').name }
         </Link>
         <Link
           data-testid="customer_products__element-navbar-link-logout"
-          to="/customer/logout"
+          to="/seller/logout"
         >
           Sair
         </Link>
