@@ -31,8 +31,28 @@ module.exports = {
         delivery_address: 'Rua dos bobos',
         delivery_number: '1',
         sale_date: new Date(),
-        status: 'Pendente',
-      }
+        status: 'Preparando',
+      },
+      {
+        id: 4,
+        user_id: 1,
+        seller_id: 2,
+        total_price: '55.80',
+        delivery_address: 'Rua dos bobos',
+        delivery_number: '1',
+        sale_date: new Date(),
+        status: 'Em Trânsito',
+      },
+      {
+        id: 5,
+        user_id: 1,
+        seller_id: 3,
+        total_price: '29.30',
+        delivery_address: 'Rua dos bobos',
+        delivery_number: '1',
+        sale_date: new Date(),
+        status: 'Entregue',
+      },
     ]);
   },
 
