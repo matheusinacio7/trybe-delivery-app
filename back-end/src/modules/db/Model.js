@@ -18,6 +18,10 @@ class Model {
     return this.Model.findAll({ where: query })
       .then((result) => result.map(extractDataValues));
   }
+
+  static update({ id, update }) {
+    return this.Model.update(update, { where: { id } });
+  }
 }
 
 module.exports = Model;

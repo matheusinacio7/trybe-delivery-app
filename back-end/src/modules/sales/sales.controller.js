@@ -66,8 +66,66 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
   return sale;
 };
 
+const updateStatus = async ({ userRole, sale, update }) => {
+  const reverseStatusDictionary = {
+    Preparando: 'Pendente',
+    'Em Trânsito': 'Preparando',
+    Entregue: 'Em Trânsito',
+  };
+
+  const allowedUpdatesByRole = {
+    customer: ['Entregue'],
+    seller: ['Preparando', 'Em Trânsito'],
+  };
+
+  await validate({ schema: 'sales_update_status', data: update });
+
+
+  if (!allowedUpdatesByRole[userRole].includes(update.status)) {
+    throw new ForbiddenError('Not allowed');
+  }
+
+  if (reverseStatusDictionary[update.status] !== sale.status) {
+    throw new ForbiddenError('Not allowed');
+  }
+
+  const updatedSale = await Model.update({
+    id: sale.id,
+    update: { status: update.status },
+  });
+
+  console.log(updatedSale);
+
+  return updatedSale;
+};
+
+const update = async ({ userId, userRole, saleId, update }) => {
+  const attributesToCompare = {
+    customer: 'userId',
+    seller: 'sellerId',
+  };
+
+  const updateFunctions = {
+    customer: updateStatus,
+    seller: updateStatus,
+  };
+
+  const sale = await Model.findOne({ query: { id: saleId } });
+
+  const attributeToCompare = attributesToCompare[userRole];
+
+  if (sale[attributeToCompare] !== userId) {
+    throw new ForbiddenError('Not allowed');
+  }
+
+  const { message } = await updateFunctions[userRole]({ userRole, sale, update });
+
+  return { message };
+}
+
 module.exports = {
   create,
   getMany,
   getDetailed,
+  update,
 };
