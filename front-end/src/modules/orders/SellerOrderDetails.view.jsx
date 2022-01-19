@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router';
 
@@ -28,13 +28,18 @@ const testIds = {
 
 export default function CustomerOrderDetails() {
   const { orderId } = useParams();
+  const [status, setStatus] = useState(null);
 
   const { result } = useApi(getById, {
     saleId: orderId,
     token: localStorage.get('user').token,
   });
 
-  console.log(result);
+  useEffect(() => {
+    if (!result) return;
+
+    setStatus(result.sale.status);
+  }, [result]);
 
   const renderTableHead = () => (
     <thead>
@@ -79,7 +84,7 @@ export default function CustomerOrderDetails() {
   };
 
   return (
-    <Layout context="customer">
+    <Layout context="seller">
       <main>
         <h1>Detalhes do pedido</h1>
         { result && (
@@ -101,12 +106,18 @@ export default function CustomerOrderDetails() {
                 { new Date(result.sale.saleDate).toLocaleDateString('pt-BR') }
               </p>
               <p data-testid={ testIds.orderStatus }>
-                { result.sale.status }
+                { status }
               </p>
-              <Button testId={ testIds.markAsBeingPrepared }>
+              <Button
+                disabled={ status !== 'Pendente' }
+                testId={ testIds.markAsBeingPrepared }
+              >
                 Marcar como preparando
               </Button>
-              <Button disabled testId={ testIds.markAsEnRoute }>
+              <Button
+                disabled={ status !== 'Preparando' }
+                testId={ testIds.markAsEnRoute }
+              >
                 Marcar como enviado
               </Button>
             </section>
