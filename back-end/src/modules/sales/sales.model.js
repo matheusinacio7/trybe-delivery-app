@@ -3,9 +3,11 @@ const { Sale } = require('../db').models;
 const findOne = ({ query, includeProducts }) => Sale.findOne({ query, includeProducts });
 const create = (saleData) => Sale.create(saleData);
 const search = (query) => Sale.search(query);
+const update = ({ id, update }) => Sale.update({ id, update });
 
 module.exports = {
   create,
   findOne,
   search,
+  update,
 };

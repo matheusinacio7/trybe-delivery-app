@@ -66,7 +66,7 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
   return sale;
 };
 
-const updateStatus = async ({ userRole, sale, update }) => {
+const updateStatus = async ({ userRole, sale, newValues }) => {
   const reverseStatusDictionary = {
     Preparando: 'Pendente',
     'Em Trânsito': 'Preparando',
@@ -78,28 +78,36 @@ const updateStatus = async ({ userRole, sale, update }) => {
     seller: ['Preparando', 'Em Trânsito'],
   };
 
-  await validate({ schema: 'sales_update_status', data: update });
+  await validate({ schema: 'sales_update_status', data: newValues });
 
 
-  if (!allowedUpdatesByRole[userRole].includes(update.status)) {
+  if (!allowedUpdatesByRole[userRole].includes(newValues.status)) {
     throw new ForbiddenError('Not allowed');
   }
 
-  if (reverseStatusDictionary[update.status] !== sale.status) {
+  if (reverseStatusDictionary[newValues.status] !== sale.status) {
     throw new ForbiddenError('Not allowed');
   }
 
-  const updatedSale = await Model.update({
+  const [updatedSaleCount] = await Model.update({
     id: sale.id,
-    update: { status: update.status },
+    update: { status: newValues.status },
   });
 
-  console.log(updatedSale);
+  if (updatedSaleCount !== 1) {
+    throw new Error('Error updating sale');
+  }
 
-  return updatedSale;
+  return {
+    message: 'Sale status updated successfully',
+    updateReport: {
+      previousStatus: sale.status,
+      newStatus: newValues.status,
+    },
+  };
 };
 
-const update = async ({ userId, userRole, saleId, update }) => {
+const update = async ({ userId, userRole, saleId, newValues }) => {
   const attributesToCompare = {
     customer: 'userId',
     seller: 'sellerId',
@@ -118,9 +126,9 @@ const update = async ({ userId, userRole, saleId, update }) => {
     throw new ForbiddenError('Not allowed');
   }
 
-  const { message } = await updateFunctions[userRole]({ userRole, sale, update });
+  const { message, updateReport } = await updateFunctions[userRole]({ userRole, sale, newValues });
 
-  return { message };
+  return { message, updateReport };
 }
 
 module.exports = {

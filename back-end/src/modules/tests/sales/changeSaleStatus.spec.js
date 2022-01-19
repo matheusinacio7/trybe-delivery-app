@@ -16,12 +16,12 @@ describe('PUT /sales', () => {
   const url = '/sales';
 
   describe('for a CUSTOMER', () => {
-    const customerId = 3;;
+    const customerId = 1;
     let tokenHeader;
 
-    const validSaleId = 1;
+    const validSaleId = 4;
     const saleIdNotMadeByTheCustomer = 2;
-    const saleIdsWithInvalidCurrentStatuses = [3, 4, 5];
+    const saleIdsWithInvalidCurrentStatuses = [1, 3, 5];
 
     const validStatusUpdate = {
       status: 'Entregue',
@@ -47,7 +47,7 @@ describe('PUT /sales', () => {
       tokenHeader = ['Authorization', token];
     });
 
-    it.only('for a sale not made by the customer, returns a forbidden error', () => request(server)
+    it('for a sale not made by the customer, returns a forbidden error', () => request(server)
       .put(`${url}/${saleIdNotMadeByTheCustomer}`)
       .set(...tokenHeader)
       .send(validStatusUpdate)
@@ -64,5 +64,14 @@ describe('PUT /sales', () => {
       .set(...tokenHeader)
       .send(validStatusUpdate)
       .expect(403)));
+
+    it.only('for a sale made by the customer, with the correct status update, returns a success message', () => request(server)
+      .put(`${url}/${validSaleId}`)
+      .set(...tokenHeader)
+      .send(validStatusUpdate)
+      .expect(200)
+      .expect((response) => {
+        expect(response.body).toHaveProperty('message');
+      }));
   });
 });
