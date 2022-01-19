@@ -17,6 +17,7 @@ describe('GET /sales/:id', () => {
   describe('for a CUSTOMER', () => {
     const customerId = 3;
     const saleId = 1;
+    let tokenHeader;
 
     beforeAll(function () {
       const token = sign({ id: customerId, role: 'customer' });

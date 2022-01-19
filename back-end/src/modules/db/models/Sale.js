@@ -7,6 +7,36 @@ const {
 
 const db = require('../../../database/models');
 
+const queryProducts = (saleId) => db.sequelize.query(
+  `SELECT
+    p.id,
+    p.name,
+    p.price,
+    p.url_image,
+    sp.quantity
+  FROM products AS p
+  INNER JOIN salesProducts AS sp
+    ON sp.product_id = p.id
+  WHERE sp.sale_id = ?;`,
+  {
+    type: QueryTypes.SELECT,
+    replacements: [saleId],
+  },
+);
+
+const querySeller = (sellerId) => db.sequelize.query(
+  `
+  SELECT
+    name
+  FROM users
+  WHERE id = ?;
+  `,
+  {
+    type: QueryTypes.SELECT,
+    replacements: [sellerId],
+  },
+);
+
 class Sale extends Model {
   static async create(data) {
     try {
@@ -40,35 +70,9 @@ class Sale extends Model {
 
     if (!includeProducts) return sale;
 
-    const products = await db.sequelize.query(
-      `SELECT
-        p.id,
-        p.name,
-        p.price,
-        p.url_image,
-        sp.quantity
-      FROM products AS p
-      INNER JOIN salesProducts AS sp
-        ON sp.product_id = p.id
-      WHERE sp.sale_id = ?;`,
-      {
-        type: QueryTypes.SELECT,
-        replacements: [sale.id],
-      }
-    );
+    const products = await queryProducts(sale.id);
 
-    const sellerQueryResult = await db.sequelize.query(
-      `
-      SELECT
-        name
-      FROM users
-      WHERE id = ?;
-      `,
-      {
-        type: QueryTypes.SELECT,
-        replacements: [sellerId],
-      },
-    );
+    const sellerQueryResult = await querySeller(sellerId);
 
     return {
       ...sale,
