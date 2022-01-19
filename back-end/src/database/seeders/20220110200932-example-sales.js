@@ -22,6 +22,16 @@ module.exports = {
         delivery_number: '34',
         sale_date: new Date(),
         status: 'Pendente',
+      },
+      {
+        id: 3,
+        user_id: 1,
+        seller_id: 3,
+        total_price: '29.30',
+        delivery_address: 'Rua dos bobos',
+        delivery_number: '1',
+        sale_date: new Date(),
+        status: 'Pendente',
       }
     ]);
   },
