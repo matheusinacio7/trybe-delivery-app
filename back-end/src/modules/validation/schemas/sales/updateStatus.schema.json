@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pendente",
+        "Preparando",
+        "Em Trânsito",
+        "Entregue"
+      ],
+      "errorMessage": "Status inválido"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "additionalProperties": false
+}
