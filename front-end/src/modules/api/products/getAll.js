@@ -5,7 +5,7 @@ const renameUrlImage = (product) => ({
   id: product.id,
   name: product.name,
   price: product.price,
-  image: product.url_image,
+  image: product.urlImage,
 });
 
 export default function getAll() {
