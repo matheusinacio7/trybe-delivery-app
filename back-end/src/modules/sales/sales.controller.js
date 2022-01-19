@@ -61,6 +61,8 @@ const getDetailed = async ({ userId, userRole, saleId }) => {
     throw new ForbiddenError('Not allowed');
   }
 
+  delete sale.sellerId;
+
   return sale;
 };
 

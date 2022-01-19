@@ -39,4 +39,30 @@ describe('GET /sales/:id', () => {
         expect(response.body.sale.products.length).toBe(1);
       }));
   });
+
+  describe('for a SELLER', () => {
+    const sellerId = 2;
+    const saleId = 1;
+    let tokenHeader;
+
+    beforeAll(function () {
+      const token = sign({ id: sellerId, role: 'seller' });
+      tokenHeader = ['Authorization', token];
+    });
+
+    it('for a sale not made by the seller, returns a forbidden error', () => request(server)
+      .get(`${url}/3`)
+      .set(...tokenHeader)
+      .expect(403));
+
+    it('for a sale made by the seller, returns the sale with all products', () => request(server)
+      .get(`${url}/${saleId}`)
+      .set(...tokenHeader)
+      .expect(200)
+      .then((response) => {
+        expect(response.body.sale.id).toBe(saleId);
+        expect(response.body.sale.sellerName).toBe('Fulana Pereira');
+        expect(response.body.sale.products.length).toBe(1);
+      }));
+  });
 });
