@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import Layout from '../layout';
 import { Button } from '../buttons';
 import { useApi } from '../api/hooks';
-import { getById } from '../api/sales';
+import { getById, updateStatus } from '../api/sales';
 
 import * as localStorage from '../localStorage';
 
@@ -40,6 +40,18 @@ export default function CustomerOrderDetails() {
 
     setStatus(result.sale.status);
   }, [result]);
+
+  const updateSaleStatus = (newStatus) => {
+    updateStatus({
+      saleId: orderId,
+      status: newStatus,
+      token: localStorage.get('user').token,
+    })
+      .then(() => {
+        setStatus(newStatus);
+      })
+      .catch(console.error);
+  };
 
   const renderTableHead = () => (
     <thead>
@@ -110,12 +122,14 @@ export default function CustomerOrderDetails() {
               </p>
               <Button
                 disabled={ status !== 'Pendente' }
+                onClick={ () => updateSaleStatus('Preparando') }
                 testId={ testIds.markAsBeingPrepared }
               >
                 Marcar como preparando
               </Button>
               <Button
                 disabled={ status !== 'Preparando' }
+                onClick={ () => updateSaleStatus('Em Trânsito') }
                 testId={ testIds.markAsEnRoute }
               >
                 Marcar como enviado
