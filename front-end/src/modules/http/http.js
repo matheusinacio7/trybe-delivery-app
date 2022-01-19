@@ -1,5 +1,7 @@
 const parseResponseJson = (response) => response.json();
 
+const contentType = 'application/json';
+
 const throwIfError = (result) => {
   if (result.error) {
     throw result.error;
@@ -10,7 +12,7 @@ const throwIfError = (result) => {
 export const post = ({ url, body, headers }) => fetch(url, {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': contentType,
     ...headers,
   },
   body: JSON.stringify(body),
@@ -21,9 +23,18 @@ export const post = ({ url, body, headers }) => fetch(url, {
 export const get = ({ url, headers }) => fetch(url, {
   method: 'GET',
   headers: {
-    Accept: 'application/json',
+    Accept: contentType,
     ...headers,
   },
 })
   .then(parseResponseJson)
   .then(throwIfError);
+
+export const put = ({ url, body, headers }) => fetch(url, {
+  method: 'PUT',
+  headers: {
+    'Content-Type': contentType,
+    ...headers,
+  },
+  body: JSON.stringify(body),
+});
