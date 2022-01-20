@@ -32,4 +32,15 @@ router.post('/', validateToken, async (req, res) => {
   res.status(201).json({ sale });
 });
 
+router.put('/:id', validateToken, async (req, res) => {
+  const { message, updateReport } = await Controller.update({
+    userId: res.locals.user.id,
+    userRole: res.locals.user.role,
+    saleId: req.params.id,
+    newValues: req.body,
+  });
+
+  res.status(200).json({ message, updateReport });
+});
+
 module.exports = router;
