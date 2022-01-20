@@ -66,19 +66,18 @@ class Sale extends Model {
   static async findOne({ query, includeProducts }) {
     const result = await SaleModel.findOne({ where: query });
 
-    const { sellerId, ...sale } = result.dataValues;
+    const sale = result.dataValues;
 
     if (!includeProducts) return sale;
 
     const products = await queryProducts(sale.id);
 
-    const sellerQueryResult = await querySeller(sellerId);
+    const sellerQueryResult = await querySeller(sale.sellerId);
 
     return {
       ...sale,
       products,
       sellerName: sellerQueryResult[0].name,
-      sellerId,
     };
   }
 }

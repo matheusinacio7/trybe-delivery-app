@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useParams } from 'react-router';
 
 import Layout from '../layout';
 import { Button } from '../buttons';
 import { useApi } from '../api/hooks';
-import { getById } from '../api/sales';
+import { getById, updateStatus } from '../api/sales';
 
 import * as localStorage from '../localStorage';
 
@@ -28,13 +28,30 @@ const testIds = {
 
 export default function CustomerOrderDetails() {
   const { orderId } = useParams();
+  const [status, setStatus] = useState(null);
 
   const { result } = useApi(getById, {
     saleId: orderId,
     token: localStorage.get('user').token,
   });
 
-  console.log(result);
+  useEffect(() => {
+    if (!result) return;
+
+    setStatus(result.sale.status);
+  }, [result]);
+
+  const updateSaleStatus = (newStatus) => {
+    updateStatus({
+      saleId: orderId,
+      status: newStatus,
+      token: localStorage.get('user').token,
+    })
+      .then(() => {
+        setStatus(newStatus);
+      })
+      .catch(console.error);
+  };
 
   const renderTableHead = () => (
     <thead>
@@ -79,7 +96,7 @@ export default function CustomerOrderDetails() {
   };
 
   return (
-    <Layout context="customer">
+    <Layout context="seller">
       <main>
         <h1>Detalhes do pedido</h1>
         { result && (
@@ -101,12 +118,20 @@ export default function CustomerOrderDetails() {
                 { new Date(result.sale.saleDate).toLocaleDateString('pt-BR') }
               </p>
               <p data-testid={ testIds.orderStatus }>
-                { result.sale.status }
+                { status }
               </p>
-              <Button testId={ testIds.markAsBeingPrepared }>
+              <Button
+                disabled={ status !== 'Pendente' }
+                onClick={ () => updateSaleStatus('Preparando') }
+                testId={ testIds.markAsBeingPrepared }
+              >
                 Marcar como preparando
               </Button>
-              <Button disabled testId={ testIds.markAsEnRoute }>
+              <Button
+                disabled={ status !== 'Preparando' }
+                onClick={ () => updateSaleStatus('Em Trânsito') }
+                testId={ testIds.markAsEnRoute }
+              >
                 Marcar como enviado
               </Button>
             </section>
